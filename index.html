@@ -28,7 +28,7 @@
         class="menu-open-btn"
         aria-label="Open menu"
         aria-controls="sidebar"
-        aria-expanded="true"
+        aria-expanded="false"
       >
         <i class="fa-solid fa-bars"></i>
       </button>
@@ -41,7 +41,7 @@
     </header>
 
     <aside id="sidebar" class="sidebar" aria-hidden="true">
-      <button class="close-menu-btn">
+      <button class="close-menu-btn" aria-label="Close menu">
         <i class="fa-solid fa-xmark"></i>
       </button>
 
@@ -62,6 +62,16 @@
       </section>
     </aside>
 
-    <main></main>
+    <main id="main-content">
+      <section class="main-content-header">
+        <h2 class="greeting-msg">Good Morning</h2>
+        <p class="current-date">Fri, May 23 2025</p>
+      </section>
+
+      <section class="notes-section">
+        <h3 class="notebook-name">JavaScript Guide</h3>
+        <div class="notes-container"></div>
+      </section>
+    </main>
   </body>
 </html>
