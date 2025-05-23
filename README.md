@@ -1,4 +1,4 @@
-# Quiz App
+# Note Taking App
 
 ## Table of contents
 
