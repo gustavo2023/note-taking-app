@@ -30,20 +30,23 @@
   </head>
   <body>
     <header>
-      <h1>Note Taking App</h1>
-      <button
-        class="menu-open-btn"
-        aria-label="Open menu"
-        aria-controls="sidebar"
-        aria-expanded="false"
-      >
-        <i class="fa-solid fa-bars"></i>
-      </button>
+      <div class="header-left-side">
+        <button
+          class="menu-open-btn"
+          aria-label="Open menu"
+          aria-controls="sidebar"
+          aria-expanded="false"
+        >
+          <i class="fa-solid fa-bars"></i>
+        </button>
+        <h1>Notes App</h1>
+      </div>
+
       <label for="theme-toggle" class="theme-toggle-btn">
         <input type="checkbox" id="theme-toggle" />
-        <i class="fa-solid fa-sun"></i>
-        <i class="fa-solid fa-moon"></i>
-        <span class="toggle-text">Toggle Theme</span>
+        <span class="toggle-text"
+          ><i class="fa-solid fa-sun"></i> <i class="fa-solid fa-moon"></i
+        ></span>
       </label>
     </header>
 
