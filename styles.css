@@ -173,3 +173,21 @@ body {
   position: relative;
   overflow-x: hidden;
 }
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1rem;
+}
+
+.menu-open-btn {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--color-accent-icon);
+}
+
+.menu-open-btn:hover {
+  color: var(--color-accent-icon-hover);
+}
