@@ -75,12 +75,12 @@ textarea:not([rows]) {
   /* Font Sizes */
   --font-size-base: 16px; /* Base font size, typically 16px for browsers */
   --font-size-small: 0.875rem;
-  --font-size-regular: 1rem; 
-  --font-size-medium: 1.125rem; 
-  --font-size-large: 1.25rem; 
-  --font-size-xl: 1.5rem; 
-  --font-size-xxl: 2rem; 
-  --font-size-xxxl: 2.5rem; 
+  --font-size-regular: 1rem;
+  --font-size-medium: 1.125rem;
+  --font-size-large: 1.25rem;
+  --font-size-xl: 1.5rem;
+  --font-size-xxl: 2rem;
+  --font-size-xxxl: 2.5rem;
 
   /* Main Backgrounds */
   --color-background-page: #f0f2f5; /* Light grey background for the entire page */
@@ -157,14 +157,19 @@ textarea:not([rows]) {
 
   /* Shadow (can be lighter or adjust for dark mode visibility) */
   --color-shadow-light: rgba(0, 0, 0, 0.25);
-  --color-shadow-dark: rgba(
-    0,
-    0,
-    0,
-    0.5
-  );
+  --color-shadow-dark: rgba(0, 0, 0, 0.5);
 
   /* Toggle specific */
   --color-toggle-sun: #888888;
   --color-toggle-moon: #63b3ed;
+}
+
+body {
+  background-color: var(--color-background-page);
+  font-family: "Sono", monospace;
+  font-size: var(--font-size-base);
+  color: var(--color-text-secondary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+  position: relative;
+  overflow-x: hidden;
 }
