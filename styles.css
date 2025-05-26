@@ -1,0 +1,170 @@
+/* Start CSS Reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+ul,
+ol {
+  list-style: none;
+  padding: 0;
+}
+
+html {
+  font-size: 100%;
+  scroll-behavior: smooth;
+  height: 100%;
+}
+
+body {
+  min-height: 100vh;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  text-wrap: balance;
+  line-height: 1.1;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+textarea:not([rows]) {
+  min-height: 10em;
+}
+
+:focus-visible {
+  outline: 2px solid dodgerblue;
+  outline-offset: 2px;
+}
+
+:target {
+  scroll-margin-block-start: 5ex;
+}
+/* End CSS Reset */
+
+/* Start Global Styles */
+:root {
+  /* Font Sizes */
+  --font-size-base: 16px; /* Base font size, typically 16px for browsers */
+  --font-size-small: 0.875rem;
+  --font-size-regular: 1rem; 
+  --font-size-medium: 1.125rem; 
+  --font-size-large: 1.25rem; 
+  --font-size-xl: 1.5rem; 
+  --font-size-xxl: 2rem; 
+  --font-size-xxxl: 2.5rem; 
+
+  /* Main Backgrounds */
+  --color-background-page: #f0f2f5; /* Light grey background for the entire page */
+  --color-background-main-content: #ffffff; /* White background for the main content area */
+  --color-background-sidebar: #e0e4eb; /* Slightly darker grey for the sidebar */
+  --color-background-note-card: #ffffff; /* White background for individual note cards */
+  --color-background-modal: #ffffff; /* White background for the dialog modal */
+
+  /* Text Colors */
+  --color-text-primary: #333333; /* Dark grey for main headings and strong text */
+  --color-text-secondary: #555555; /* Medium grey for regular paragraph text */
+  --color-text-tertiary: #888888; /* Lighter grey for subtle text like dates, secondary labels */
+  --color-text-on-accent: #ffffff; /* White text on accent colors (e.g., buttons) */
+
+  /* Borders & Dividers */
+  --color-border-primary: #dcdfe3; /* Light grey for general borders and separators */
+  --color-border-note-card: #e0e4eb; /* Slightly darker border for note cards */
+  --color-border-input: #cccccc; /* Standard grey for input borders */
+
+  /* Accent Colors (for buttons, active states, icons) */
+  --color-accent-primary: #007bff; /* A vibrant blue for primary actions/buttons */
+  --color-accent-secondary: #28a745; /* A green for "new" or positive actions */
+  --color-accent-delete: #dc3545; /* A red for delete actions */
+  --color-accent-edit: #ffc107; /* An orange/yellow for edit actions */
+  --color-accent-icon: #666666; /* Default icon color */
+  --color-accent-icon-hover: #0056b3; /* Darker blue for icon hover */
+
+  /* Shadow */
+  --color-shadow-light: rgba(
+    0,
+    0,
+    0,
+    0.08
+  ); /* Subtle shadow for cards/modals */
+  --color-shadow-dark: rgba(
+    0,
+    0,
+    0,
+    0.2
+  ); /* Darker shadow for modal backdrop */
+
+  /* Toggle specific */
+  --color-toggle-sun: #ffc107; /* Yellow for sun icon */
+  --color-toggle-moon: #666666; /* Grey for moon icon */
+}
+
+/* --- Dark Mode Overrides --- */
+.dark-mode {
+  /* Main Backgrounds */
+  --color-background-page: #222831;
+  --color-background-main-content: #393e46;
+  --color-background-sidebar: #333842;
+  --color-background-note-card: #393e46;
+  --color-background-modal: #30343a;
+
+  /* Text Colors */
+  --color-text-primary: #eeeeee;
+  --color-text-secondary: #c0c0c0;
+  --color-text-tertiary: #9a9a9a;
+  --color-text-on-accent: #ffffff;
+
+  /* Borders & Dividers */
+  --color-border-primary: #4a505b;
+  --color-border-note-card: #4a505b;
+  --color-border-input: #555555;
+
+  /* Accent Colors (for buttons, active states, icons) */
+  --color-accent-primary: #63b3ed;
+  --color-accent-secondary: #48bb78;
+  --color-accent-delete: #ef5350;
+  --color-accent-edit: #ffd700;
+  --color-accent-icon: #bbbbbb;
+  --color-accent-icon-hover: #a3c9e6;
+
+  /* Shadow (can be lighter or adjust for dark mode visibility) */
+  --color-shadow-light: rgba(0, 0, 0, 0.25);
+  --color-shadow-dark: rgba(
+    0,
+    0,
+    0,
+    0.5
+  );
+
+  /* Toggle specific */
+  --color-toggle-sun: #888888;
+  --color-toggle-moon: #63b3ed;
+}
