@@ -306,6 +306,37 @@ input:checked + .toggle-text::before {
   transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
+.notebooks-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+}
+
+.notebooks-section h2 {
+  color: var(--color-text-primary);
+  font-size: clamp(
+    var(--font-size-medium),
+    1.5vw + 0.5rem,
+    var(--font-size-xl)
+  );
+}
+
+.new-notebook-btn {
+  border: none;
+  background-color: var(--color-accent-primary);
+  color: var(--color-text-on-accent);
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.new-notebook-btn:hover {
+  background-color: var(--color-accent-primary-hover);
+  box-shadow: 0 0 10px var(--color-shadow-light);
+  transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
 .overlay {
   position: fixed;
   top: 0;
