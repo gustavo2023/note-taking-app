@@ -105,7 +105,7 @@ textarea:not([rows]) {
   --color-accent-secondary: #28a745; /* A green for "new" or positive actions */
   --color-accent-delete: #dc3545; /* A red for delete actions */
   --color-accent-edit: #ffc107; /* An orange/yellow for edit actions */
-  --color-accent-icon: #666666; /* Default icon color */
+  --color-accent-icon: #6e6e6e; /* Default icon color */
   --color-accent-icon-hover: #0056b3; /* Darker blue for icon hover */
 
   /* Shadow */
@@ -123,8 +123,8 @@ textarea:not([rows]) {
   ); /* Darker shadow for modal backdrop */
 
   /* Toggle specific */
-  --color-toggle-sun: #ffc107; /* Yellow for sun icon */
-  --color-toggle-moon: #666666; /* Grey for moon icon */
+  --color-toggle-sun: #ffc107;
+  --color-toggle-moon: #6222c9;
 }
 
 /* --- Dark Mode Overrides --- */
@@ -158,10 +158,6 @@ textarea:not([rows]) {
   /* Shadow (can be lighter or adjust for dark mode visibility) */
   --color-shadow-light: rgba(0, 0, 0, 0.25);
   --color-shadow-dark: rgba(0, 0, 0, 0.5);
-
-  /* Toggle specific */
-  --color-toggle-sun: #888888;
-  --color-toggle-moon: #63b3ed;
 }
 
 body {
@@ -206,10 +202,13 @@ h1 {
 /* Theme Toggle Switch Styles */
 .theme-toggle-btn {
   position: relative;
-  display: inline-block;
-  width: 45px;
-  height: 30px;
-  vertical-align: middle;
+  display: block;
+  --toggle-width: 3.2rem;
+  --toggle-height: 1.8rem;
+  --icon-size: 1.25rem;
+  --slider-offset: 0.3rem;
+  width: var(--toggle-width);
+  height: var(--toggle-height);
 }
 
 .theme-toggle-btn input {
@@ -225,43 +224,32 @@ h1 {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: var(--color-border-input);
-  border-radius: 15px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background-color 0.4s;
+  background-color: var(--color-accent-icon);
+  transition: 0.4s;
+  border-radius: 30px;
 }
 
-.theme-toggle-btn input:checked + .toggle-text {
-  background-color: var(--color-accent-primary); 
+.toggle-text::before {
+  position: absolute;
+  content: "";
+  height: var(--icon-size);
+  width: var(--icon-size);
+  border-radius: 20px;
+  left: var(--slider-offset);
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: var(--color-toggle-sun);
+  transition: 0.4s;
 }
 
-.theme-toggle-btn input:focus-visible + .toggle-text {
-  outline: 2px solid var(--color-accent-primary);
-  outline-offset: 2px;
+input:checked + .toggle-text {
+  background-color: var(--color-accent-icon);
 }
 
-.toggle-text .fa-solid {
-  font-size: 16px; /* Adjust icon size as needed */
-  transition: color 0.4s;
-}
-
-/* Light Mode (default) - Sun icon visible */
-.toggle-text .fa-sun {
-  display: inline-block;
-  color: var(--color-toggle-sun);
-}
-.toggle-text .fa-moon {
-  display: none;
-}
-
-.theme-toggle-btn input:checked + .toggle-text .fa-sun {
-  display: none;
-}
-.theme-toggle-btn input:checked + .toggle-text .fa-moon {
-  display: inline-block;
-  color: var(--color-toggle-moon);
+input:checked + .toggle-text::before {
+  left: calc(100% - var(--icon-size) - var(--slider-offset));
+  background-color: var(--color-accent-icon);
+  box-shadow: inset -3px -2px 5px -2px #8983f7, inset -10px -4px 0 0 var(--color-toggle-moon);
 }
 
 @media (min-width: 64rem) {
