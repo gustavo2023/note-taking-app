@@ -302,14 +302,44 @@ input:checked + .toggle-text::before {
 }
 
 @media (min-width: 64rem) {
+  body {
+    display: grid;
+    grid-template-columns: 16rem 1fr;
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+      "sidebar header"
+      "sidebar main";
+  }
+
+  header {
+    grid-area: header;
+    padding: 1rem 1.5rem;
+  }
+
   .menu-open-btn {
     display: none;
   }
 
   .sidebar {
+    grid-area: sidebar;
+    position: static;
     transform: none;
     visibility: visible;
-    width: 16rem;
-    box-shadow: none;
+    width: auto;
+    box-shadow: var(--color-shadow-light);
+  }
+
+  .close-menu-btn {
+    display: none;
+  }
+
+  .overlay {
+    display: none;
+  }
+
+  main {
+    grid-area: main;
+    padding: 1.5rem;
+    overflow-y: auto;
   }
 }
