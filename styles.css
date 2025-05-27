@@ -393,6 +393,24 @@ main {
   );
 }
 
+.notes-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.notebook-name {
+  color: var(--color-text-primary);
+  font-size: clamp(var(--font-size-medium), 2vw + 0.5rem, var(--font-size-xl));
+}
+
+.notes-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
 @media (min-width: 64rem) {
   body {
     display: grid;
