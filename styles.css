@@ -337,6 +337,16 @@ input:checked + .toggle-text::before {
   transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
+.notebooks-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+  justify-content: center;
+  align-items: flex-start;
+}
+
 .overlay {
   position: fixed;
   top: 0;
