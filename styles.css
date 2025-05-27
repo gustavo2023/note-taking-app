@@ -249,11 +249,67 @@ input:checked + .toggle-text {
 input:checked + .toggle-text::before {
   left: calc(100% - var(--icon-size) - var(--slider-offset));
   background-color: var(--color-accent-icon);
-  box-shadow: inset -3px -2px 5px -2px #8983f7, inset -10px -4px 0 0 var(--color-toggle-moon);
+  box-shadow: inset -3px -2px 5px -2px #8983f7,
+    inset -10px -4px 0 0 var(--color-toggle-moon);
+}
+
+.sidebar {
+  background-color: var(--color-background-sidebar);
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 14rem;
+  padding: 1.5rem 1rem;
+  box-shadow: 0 0 10px var(--color-shadow-light);
+  z-index: 1000;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  visibility: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar.open {
+  transform: translateX(0);
+  visibility: visible;
+}
+
+.close-menu-btn {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--color-accent-icon);
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease-in-out, visibility 0s linear 0.3s;
+  z-index: 999;
+}
+
+.overlay.visible {
+  opacity: 0.75;
+  visibility: visible;
+  transition: opacity 0.3s ease-in-out;
 }
 
 @media (min-width: 64rem) {
   .menu-open-btn {
     display: none;
+  }
+
+  .sidebar {
+    transform: none;
+    visibility: visible;
+    width: 16rem;
+    box-shadow: none;
   }
 }
