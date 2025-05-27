@@ -84,7 +84,6 @@ textarea:not([rows]) {
 
   /* Main Backgrounds */
   --color-background-page: #f0f2f5; /* Light grey background for the entire page */
-  --color-background-main-content: #ffffff; /* White background for the main content area */
   --color-background-sidebar: #e0e4eb; /* Slightly darker grey for the sidebar */
   --color-background-note-card: #ffffff; /* White background for individual note cards */
   --color-background-modal: #ffffff; /* White background for the dialog modal */
@@ -364,6 +363,34 @@ input:checked + .toggle-text::before {
   opacity: 0.75;
   visibility: visible;
   transition: opacity 0.3s ease-in-out;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 1.5rem;
+}
+
+.main-content-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.greeting-msg {
+  color: var(--color-text-primary);
+  font-size: clamp(var(--font-size-medium), 2vw + 0.5rem, var(--font-size-xl));
+}
+
+.current-date {
+  color: var(--color-text-tertiary);
+  font-size: clamp(
+    var(--font-size-small),
+    1.5vw + 0.25rem,
+    var(--font-size-regular)
+  );
 }
 
 @media (min-width: 64rem) {
