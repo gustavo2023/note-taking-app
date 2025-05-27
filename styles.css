@@ -102,6 +102,7 @@ textarea:not([rows]) {
 
   /* Accent Colors (for buttons, active states, icons) */
   --color-accent-primary: #007bff; /* A vibrant blue for primary actions/buttons */
+  --color-accent-primary-hover: #0056b3;
   --color-accent-secondary: #28a745; /* A green for "new" or positive actions */
   --color-accent-delete: #dc3545; /* A red for delete actions */
   --color-accent-edit: #ffc107; /* An orange/yellow for edit actions */
@@ -149,6 +150,7 @@ textarea:not([rows]) {
 
   /* Accent Colors (for buttons, active states, icons) */
   --color-accent-primary: #63b3ed;
+  --color-accent-primary-hover: #4ea5d7;
   --color-accent-secondary: #48bb78;
   --color-accent-delete: #ef5350;
   --color-accent-edit: #ffd700;
@@ -175,6 +177,7 @@ header {
   justify-content: space-between;
   align-items: center;
   padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--color-border-primary);
 }
 
 .header-left-side {
@@ -199,7 +202,6 @@ h1 {
   font-size: clamp(var(--font-size-xl), 2vw + 1rem, var(--font-size-xxxl));
 }
 
-/* Theme Toggle Switch Styles */
 .theme-toggle-btn {
   position: relative;
   display: block;
@@ -268,6 +270,7 @@ input:checked + .toggle-text::before {
   visibility: hidden;
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
 }
 
 .sidebar.open {
@@ -280,6 +283,27 @@ input:checked + .toggle-text::before {
   border: none;
   cursor: pointer;
   color: var(--color-accent-icon);
+  margin-bottom: 2rem;
+}
+
+.close-menu-btn:hover {
+  color: var(--color-accent-icon-hover);
+}
+
+.new-note-btn {
+  border: none;
+  background-color: var(--color-accent-primary);
+  color: var(--color-text-on-accent);
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-bottom: 1.2rem;
+}
+
+.new-note-btn:hover {
+  background-color: var(--color-accent-primary-hover);
+  box-shadow: 0 0 10px var(--color-shadow-light);
+  transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
 .overlay {
