@@ -5,7 +5,7 @@ const sidebar = document.querySelector(".sidebar");
 const openSidebarButton = document.querySelector(".menu-open-btn");
 const closeSidebarButton = document.querySelector(".close-menu-btn");
 const sidebarOverlay = document.querySelector(".overlay");
-const themeToggleButton = document.querySelector(".theme-toggle-btn");
+const themeToggleButton = document.querySelector(".theme-toggle");
 
 const toggleSidebar = () => {
   sidebar.classList.toggle("open");
@@ -32,11 +32,14 @@ const handleEscapeKeydown = (event) => {
 };
 
 const initializeApp = () => {
-  loadTheme(themeToggleButton);
-
-  themeToggleButton.addEventListener("change", () => {
-    toggleTheme(themeToggleButton);
-  });
+  if (themeToggleButton) {
+    loadTheme(themeToggleButton);
+    themeToggleButton.addEventListener("change", () => {
+      toggleTheme(themeToggleButton);
+    });
+  } else {
+    console.warn("Theme toggle button not found.");
+  }
 };
 
 // Event listeners for opening and closing the sidebar
