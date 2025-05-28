@@ -107,6 +107,7 @@ textarea:not([rows]) {
   --color-accent-edit: #ffc107; /* An orange/yellow for edit actions */
   --color-accent-icon: #6e6e6e; /* Default icon color */
   --color-accent-icon-hover: #0056b3; /* Darker blue for icon hover */
+  --color-toggle-bg: #d9dbdd; /* Background for the toggle switch */
 
   /* Shadow */
   --color-shadow-light: rgba(
@@ -155,6 +156,7 @@ textarea:not([rows]) {
   --color-accent-edit: #ffd700;
   --color-accent-icon: #bbbbbb;
   --color-accent-icon-hover: #a3c9e6;
+  --color-toggle-bg: #393e46;
 
   /* Shadow (can be lighter or adjust for dark mode visibility) */
   --color-shadow-light: rgba(0, 0, 0, 0.25);
@@ -226,7 +228,7 @@ h1 {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: var(--color-accent-icon);
+  background-color: var(--color-toggle-bg);
   transition: 0.4s;
   border-radius: 30px;
 }
@@ -245,12 +247,12 @@ h1 {
 }
 
 input:checked + .toggle-text {
-  background-color: var(--color-accent-icon);
+  background-color: var(--color-toggle-bg);
 }
 
 input:checked + .toggle-text::before {
   left: calc(100% - var(--icon-size) - var(--slider-offset));
-  background-color: var(--color-accent-icon);
+  background-color: var(--color-toggle-bg);
   box-shadow: inset -3px -2px 5px -2px #8983f7,
     inset -10px -4px 0 0 var(--color-toggle-moon);
 }
