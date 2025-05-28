@@ -169,6 +169,7 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
   position: relative;
   overflow-x: hidden;
+  scroll-behavior: smooth;
 }
 
 header {
@@ -259,7 +260,7 @@ input:checked + .toggle-text::before {
   position: fixed;
   top: 0;
   left: 0;
-  height: 100vh;
+  height: 100%;
   width: 14rem;
   padding: 1.5rem 1rem;
   box-shadow: 0 0 10px var(--color-shadow-light);
@@ -409,6 +410,106 @@ main {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 1.5rem;
+}
+
+.note {
+  background-color: var(--color-background-note-card);
+  border: 1px solid var(--color-border-note-card);
+  border-radius: 10px;
+  padding: 1rem;
+  box-shadow: var(--color-shadow-light);
+  transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  overflow: hidden;
+}
+
+.note:hover {
+  box-shadow: var(--color-shadow-dark);
+  transform: translateY(-2px);
+}
+
+.note-title {
+  color: var(--color-text-primary);
+  font-size: clamp(
+    var(--font-size-regular),
+    2vw + 0.25rem,
+    var(--font-size-large)
+  );
+  font-weight: bold;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-bottom: 0.5rem;
+}
+
+.note-content {
+  color: var(--color-text-secondary);
+  font-size: clamp(
+    var(--font-size-small),
+    2vw + 0.25rem,
+    var(--font-size-regular)
+  );
+  line-height: 1.4;
+  flex-grow: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 4; /* Adjust number of lines to show */
+  line-clamp: 4; /* Standard property for compatibility */
+  -webkit-box-orient: vertical;
+}
+
+.note-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.8rem;
+}
+
+.note-creation-date {
+  color: var(--color-text-tertiary);
+  font-size: clamp(
+    var(--font-size-small),
+    1.5vw + 0.25rem,
+    var(--font-size-regular)
+  );
+}
+
+.note-buttons-container {
+  display: flex;
+  gap: 0.4rem;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(5px);
+  transition: opacity 0.2s ease-out, visibility 0s linear 0.2s,
+    transform 0.2s ease-out;
+}
+
+.note:hover .note-buttons-container {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  transition-delay: 0s;
+}
+
+.delete-note-btn {
+  background: none;
+  color: var(--color-accent-delete);
+  border: none;
+  padding: 0.5rem;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.edit-note-btn {
+  background: none;
+  color: var(--color-accent-edit);
+  border: none;
+  padding: 0.5rem;
+  border-radius: 10px;
+  cursor: pointer;
 }
 
 @media (min-width: 64rem) {
