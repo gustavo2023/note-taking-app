@@ -24,3 +24,19 @@ export const loadTheme = (toggleButton) => {
     toggleButton.checked = false;
   }
 };
+
+const saveTheme = (theme) => {
+  localStorage.setItem(THEME_KEY, theme);
+};
+
+export const toggleTheme = (toggleButton) => {
+  if (body.classList.contains("dark-mode")) {
+    body.classList.remove("dark-mode");
+    saveTheme("light");
+    toggleButton.checked = false;
+  } else {
+    body.classList.add("dark-mode");
+    saveTheme("dark");
+    toggleButton.checked = true;
+  }
+};
