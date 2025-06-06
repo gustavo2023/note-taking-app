@@ -25,3 +25,16 @@ export const deleteNotebook = (notebookId) => {
   notebooks = notebooks.filter((notebook) => notebook.id !== notebookId);
   saveData(notebooks);
 };
+
+export const renameNotebook = (notebookId, newName) => {
+  let notebookToRename = notebooks.find(
+    (notebook) => notebook.id === notebookId
+  );
+
+  if (notebookToRename) {
+    notebookToRename.name = newName;
+    saveData(notebooks);
+  } else {
+    console.error("Notebook not found for renaming.");
+  }
+};
