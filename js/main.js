@@ -1,12 +1,14 @@
+// -- Importing necessary modules and services --
 import { loadTheme, toggleTheme } from "./services/theme.js";
 
-/* DOM Elements */
+// -- DOM Elements --
 const sidebar = document.querySelector(".sidebar");
 const openSidebarButton = document.querySelector(".menu-open-btn");
 const closeSidebarButton = document.querySelector(".close-menu-btn");
 const sidebarOverlay = document.querySelector(".overlay");
 const themeToggleButton = document.querySelector(".theme-toggle");
 
+//  -- Sidebar Toggle Functionality --
 const toggleSidebar = () => {
   sidebar.classList.toggle("open");
   sidebarOverlay.classList.toggle("visible");
@@ -31,6 +33,7 @@ const handleEscapeKeydown = (event) => {
   }
 };
 
+// -- Function to initialize the application --
 const initializeApp = () => {
   if (themeToggleButton) {
     loadTheme(themeToggleButton);

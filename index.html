@@ -53,19 +53,29 @@
         <i class="fa-solid fa-xmark"></i>
       </button>
 
-      <button class="new-note-btn">
+      <button class="new-note-btn" aria-label="Add new note">
         <i class="fa-solid fa-plus"></i>
         <span class="new-note-text">Add Note</span>
       </button>
       <section class="notebooks-section">
         <h2>Notebooks</h2>
-        <button class="new-notebook-btn">
+        <button class="new-notebook-btn" aria-label="Create new notebook">
           <span class="new-notebook-text">New Notebook</span>
           <i class="fa-solid fa-plus"></i>
         </button>
 
         <nav aria-label="Notebooks list">
-          <ul id="notebooks-list"></ul>
+          <ul id="notebooks-list">
+            <li class="notebook-item">
+              <span class="notebook">JavaScript Guide</span>
+              <button class="delete-notebook-btn" aria-label="Delete notebook">
+                <i class="fa-solid fa-trash-can"></i>
+              </button>
+              <button class="edit-notebook-btn" aria-label="Edit notebook">
+                <i class="fa-solid fa-pen-to-square"></i>
+              </button>
+            </li>
+          </ul>
         </nav>
       </section>
     </aside>
