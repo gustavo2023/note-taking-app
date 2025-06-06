@@ -19,3 +19,16 @@ export const loadData = () => {
     return [];
   }
 };
+
+export const saveData = (data) => {
+  if (!Array.isArray(data)) {
+    console.error("Data to save must be an array.");
+    return;
+  }
+
+  try {
+    localStorage.setItem(APP_DATA_KEY, JSON.stringify(data));
+  } catch (error) {
+    console.error("Error saving data to localStorage:", error);
+  }
+};
