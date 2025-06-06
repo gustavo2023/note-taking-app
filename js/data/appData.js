@@ -11,6 +11,11 @@ export const getNotebooks = () => {
 };
 
 export const addNotebook = (name) => {
+  if (!name || typeof name !== "string" || name.trim() === "") {
+    console.error("Invalid notebook name.");
+    return false;
+  }
+
   let newNotebook = {
     id: Date.now().toString(),
     name: name,
@@ -19,6 +24,8 @@ export const addNotebook = (name) => {
 
   notebooks.push(newNotebook);
   saveData(notebooks);
+
+  return true;
 };
 
 export const deleteNotebook = (notebookId) => {
