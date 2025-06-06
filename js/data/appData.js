@@ -10,17 +10,21 @@ export const getNotebooks = () => {
   return notebooks;
 };
 
+const createNotebook = (name) => {
+  return {
+    id: Date.now().toString(),
+    name: name.trim(),
+    notes: [],
+  };
+};
+
 export const addNotebook = (name) => {
   if (!name || typeof name !== "string" || name.trim() === "") {
     console.error("Invalid notebook name.");
     return false;
   }
 
-  let newNotebook = {
-    id: Date.now().toString(),
-    name: name,
-    notes: [],
-  };
+  let newNotebook = createNotebook(name);
 
   notebooks.push(newNotebook);
   saveData(notebooks);
@@ -45,7 +49,7 @@ export const deleteNotebook = (notebookId) => {
     saveData(notebooks);
     return true;
   } else {
-    console.error("Notebook not found for deletion.");
+    console.warn("Notebook not found for deletion.");
     return false;
   }
 };
@@ -73,6 +77,6 @@ export const renameNotebook = (notebookId, newName) => {
     notebookToRename.name = newName.trim();
     saveData(notebooks);
   } else {
-    console.error("Notebook not found for renaming.");
+    console.warn("Notebook not found for renaming.");
   }
 };
