@@ -18,6 +18,17 @@ const createNotebook = (name) => {
   };
 };
 
+const createNote = (title, content) => {
+  const nowTimestamp = Date.now();
+  return {
+    id: nowTimestamp.toString(),
+    title: title.trim(),
+    content: content.trim(),
+    createdAt: nowTimestamp,
+    updatedAt: nowTimestamp,
+  };
+};
+
 export const addNotebook = (name) => {
   if (!name || typeof name !== "string" || name.trim() === "") {
     console.error("Invalid notebook name.");
