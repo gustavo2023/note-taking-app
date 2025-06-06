@@ -156,3 +156,44 @@ const deleteNote = (notebookId, noteId) => {
     return false;
   }
 };
+
+const editNote = (notebookId, noteId, newTitle, newContent) => {
+  if (
+    !notebookId ||
+    typeof notebookId !== "string" ||
+    notebookId.trim() === ""
+  ) {
+    console.error("Invalid notebook ID.");
+    return false;
+  }
+
+  if (!noteId || typeof noteId !== "string" || noteId.trim() === "") {
+    console.error("Invalid note ID.");
+    return false;
+  }
+
+  let notebook = notebooks.find((notebook) => notebook.id === notebookId);
+  if (!notebook) {
+    console.warn("Notebook not found for editing note.");
+    return false;
+  }
+
+  let noteToEdit = notebook.notes.find((note) => note.id === noteId);
+  if (!noteToEdit) {
+    console.warn("Note not found for editing.");
+    return false;
+  }
+
+  if (newTitle && typeof newTitle === "string") {
+    noteToEdit.title = newTitle.trim();
+  }
+
+  if (newContent && typeof newContent === "string") {
+    noteToEdit.content = newContent.trim();
+  }
+
+  noteToEdit.updatedAt = Date.now();
+
+  saveData(notebooks);
+  return true;
+};
