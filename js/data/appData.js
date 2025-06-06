@@ -2,11 +2,11 @@ import { loadData, saveData } from "../services/storage.js";
 
 let notebooks = [];
 
-export const initializeAppData = () => {
+const initializeAppData = () => {
   notebooks = loadData();
 };
 
-export const getNotebooks = () => {
+const getNotebooks = () => {
   return notebooks;
 };
 
@@ -29,7 +29,7 @@ const createNote = (title, content) => {
   };
 };
 
-export const addNotebook = (name) => {
+const addNotebook = (name) => {
   if (!name || typeof name !== "string" || name.trim() === "") {
     console.error("Invalid notebook name.");
     return false;
@@ -43,7 +43,7 @@ export const addNotebook = (name) => {
   return true;
 };
 
-export const deleteNotebook = (notebookId) => {
+const deleteNotebook = (notebookId) => {
   if (
     !notebookId ||
     typeof notebookId !== "string" ||
@@ -65,7 +65,7 @@ export const deleteNotebook = (notebookId) => {
   }
 };
 
-export const renameNotebook = (notebookId, newName) => {
+const renameNotebook = (notebookId, newName) => {
   if (
     !notebookId ||
     typeof notebookId !== "string" ||
@@ -196,4 +196,15 @@ const editNote = (notebookId, noteId, newTitle, newContent) => {
 
   saveData(notebooks);
   return true;
+};
+
+export {
+  initializeAppData,
+  getNotebooks,
+  addNotebook,
+  deleteNotebook,
+  renameNotebook,
+  addNote,
+  deleteNote,
+  editNote,
 };
