@@ -51,12 +51,26 @@ export const deleteNotebook = (notebookId) => {
 };
 
 export const renameNotebook = (notebookId, newName) => {
+  if (
+    !notebookId ||
+    typeof notebookId !== "string" ||
+    notebookId.trim() === ""
+  ) {
+    console.error("Invalid notebook ID.");
+    return false;
+  }
+
+  if (!newName || typeof newName !== "string" || newName.trim() === "") {
+    console.error("Invalid new notebook name.");
+    return false;
+  }
+
   let notebookToRename = notebooks.find(
     (notebook) => notebook.id === notebookId
   );
 
   if (notebookToRename) {
-    notebookToRename.name = newName;
+    notebookToRename.name = newName.trim();
     saveData(notebooks);
   } else {
     console.error("Notebook not found for renaming.");
