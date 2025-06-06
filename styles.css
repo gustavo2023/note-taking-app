@@ -349,6 +349,46 @@ input:checked + .toggle-text::before {
   align-items: flex-start;
 }
 
+.notebook-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  background-color: var(--color-background-page);
+  padding: 0.5rem 0.8rem;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.notebook-name {
+  color: var(--color-text-primary);
+  font-size: clamp(
+    var(--font-size-small),
+    1.5vw + 0.25rem,
+    var(--font-size-medium)
+  );
+  flex-grow: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.notebook-action-btns {
+  display: flex;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(5px);
+  transition: opacity 0.2s ease-out, visibility 0s linear 0.2s,
+    transform 0.2s ease-out;
+}
+
+.notebook-item:hover .notebook-action-btns {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0);
+  transition-delay: 0s;
+}
+
 .overlay {
   position: fixed;
   top: 0;
@@ -403,7 +443,7 @@ main {
   gap: 1.5rem;
 }
 
-.notebook-name {
+.notebook-title {
   color: var(--color-text-primary);
   font-size: clamp(var(--font-size-medium), 2vw + 0.5rem, var(--font-size-xl));
 }
@@ -496,7 +536,8 @@ main {
   transition-delay: 0s;
 }
 
-.delete-note-btn {
+.delete-note-btn,
+.delete-notebook-btn {
   background: none;
   color: var(--color-accent-delete);
   border: none;
@@ -505,7 +546,8 @@ main {
   cursor: pointer;
 }
 
-.edit-note-btn {
+.edit-note-btn,
+.edit-notebook-btn {
   background: none;
   color: var(--color-accent-edit);
   border: none;
