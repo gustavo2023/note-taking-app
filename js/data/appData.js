@@ -29,8 +29,25 @@ export const addNotebook = (name) => {
 };
 
 export const deleteNotebook = (notebookId) => {
+  if (
+    !notebookId ||
+    typeof notebookId !== "string" ||
+    notebookId.trim() === ""
+  ) {
+    console.error("Invalid notebook ID.");
+    return false;
+  }
+
+  const notebookArrayInitialLength = notebooks.length;
   notebooks = notebooks.filter((notebook) => notebook.id !== notebookId);
-  saveData(notebooks);
+
+  if (notebooks.length < notebookArrayInitialLength) {
+    saveData(notebooks);
+    return true;
+  } else {
+    console.error("Notebook not found for deletion.");
+    return false;
+  }
 };
 
 export const renameNotebook = (notebookId, newName) => {
