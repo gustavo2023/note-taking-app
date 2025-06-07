@@ -556,6 +556,90 @@ main {
   cursor: pointer;
 }
 
+.note-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--color-background-modal);
+  padding: 1rem 1.5rem;
+  border: 1px solid var(--color-border-primary);
+  border-radius: 10px;
+  box-shadow: var(--color-shadow-dark);
+  z-index: 2000;
+  width: 90%;
+  max-width: 600px;
+  display: none;
+  flex-direction: column;
+}
+
+::backdrop {
+  background-color: var(--color-shadow-dark);
+  opacity: 0.75;
+}
+
+.close-modal-btn {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--color-accent-icon);
+  align-self: flex-end;
+  margin-bottom: 1rem;
+}
+
+.note-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.modal-title {
+  color: var(--color-text-primary);
+  font-size: clamp(var(--font-size-medium), 2vw + 0.5rem, var(--font-size-xl));
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.input-group label {
+  color: var(--color-text-tertiary);
+  font-size: clamp(
+    var(--font-size-small),
+    1.5vw + 0.25rem,
+    var(--font-size-regular)
+  );
+}
+
+.input-group input,
+.input-group textarea {
+  border: 1px solid var(--color-border-input);
+  border-radius: 10px;
+  padding: 0.5rem;
+  font-size: var(--font-size-regular);
+  color: var(--color-text-primary);
+  background-color: var(--color-background-page);
+  transition: border-color 0.3s ease-in-out;
+}
+
+button[type="submit"] {
+  background-color: var(--color-accent-primary);
+  color: var(--color-text-on-accent);
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-size: var(--font-size-regular);
+}
+
+button[type="submit"]:hover {
+  background-color: var(--color-accent-primary-hover);
+  box-shadow: 0 0 10px var(--color-shadow-light);
+  transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
 @media (min-width: 64rem) {
   body {
     display: grid;

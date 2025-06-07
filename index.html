@@ -183,12 +183,16 @@
       <button class="close-modal-btn" aria-label="Close modal">
         <i class="fa-solid fa-xmark"></i>
       </button>
-      <form id="note-form" method="dialog">
+      <form class="note-form" id="note-form" method="dialog">
         <h3 class="modal-title">New Note</h3>
-        <label for="note-title">Title</label>
-        <input type="text" id="note-title" required />
-        <label for="note-content">Content</label>
-        <textarea id="note-content" required></textarea>
+        <div class="input-group">
+          <label for="note-title">Title</label>
+          <input type="text" id="note-title" />
+        </div>
+        <div class="input-group">
+          <label for="note-content">Content</label>
+          <textarea id="note-content"></textarea>
+        </div>
         <button type="submit" class="save-note-btn">Save Note</button>
       </form>
     </dialog>
