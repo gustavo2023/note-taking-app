@@ -2,6 +2,49 @@ import { loadData, saveData } from "../services/storage.js";
 
 let notebooks = [];
 
+// Helper Functions
+const validateNonEmptyString = (value, fieldName) => {
+  if (!value || typeof value !== "string" || value.trim() === "") {
+    console.error(`Invalid ${fieldName}. It must be a non-empty string.`);
+    return false;
+  }
+  return true;
+};
+
+const findNotebookById = (notebookId) => {
+  if (!validateNonEmptyString(notebookId, "notebook ID")) {
+    return null;
+  }
+
+  const notebook = notebooks.find((nb) => nb.id === notebookId);
+  if (!notebook) {
+    console.warn(`Notebook not found with ID: ${notebookId}.`);
+    return null;
+  }
+  return notebook;
+};
+
+const findNoteInNotebookById = (notebookId, noteId) => {
+  if (!validateNonEmptyString(noteId, "note ID")) {
+    return null;
+  }
+
+  const notebook = findNotebookById(notebookId);
+  if (!notebook) {
+    return null;
+  }
+
+  const note = notebook.notes.find((n) => n.id === noteId);
+
+  if (!note) {
+    console.warn(
+      `Note not found with ID: ${noteId} in notebook "${notebook?.name}".`
+    );
+    return null;
+  }
+  return note;
+};
+
 const initializeAppData = () => {
   notebooks = loadData();
 };
@@ -30,8 +73,7 @@ const createNote = (title, content) => {
 };
 
 const addNotebook = (name) => {
-  if (!name || typeof name !== "string" || name.trim() === "") {
-    console.error("Invalid notebook name.");
+  if (!validateNonEmptyString(name, "notebook name")) {
     return false;
   }
 
@@ -39,24 +81,18 @@ const addNotebook = (name) => {
 
   notebooks.push(newNotebook);
   saveData(notebooks);
-
   return true;
 };
 
 const deleteNotebook = (notebookId) => {
-  if (
-    !notebookId ||
-    typeof notebookId !== "string" ||
-    notebookId.trim() === ""
-  ) {
-    console.error("Invalid notebook ID.");
+  if (!validateNonEmptyString(notebookId, "notebook ID")) {
     return false;
   }
 
-  const notebookArrayInitialLength = notebooks.length;
+  const initialLength = notebooks.length;
   notebooks = notebooks.filter((notebook) => notebook.id !== notebookId);
 
-  if (notebooks.length < notebookArrayInitialLength) {
+  if (notebooks.length < initialLength) {
     saveData(notebooks);
     return true;
   } else {
@@ -66,42 +102,21 @@ const deleteNotebook = (notebookId) => {
 };
 
 const renameNotebook = (notebookId, newName) => {
-  if (
-    !notebookId ||
-    typeof notebookId !== "string" ||
-    notebookId.trim() === ""
-  ) {
-    console.error("Invalid notebook ID.");
+  if (!validateNonEmptyString(newName, "new notebook name")) {
     return false;
   }
 
-  if (!newName || typeof newName !== "string" || newName.trim() === "") {
-    console.error("Invalid new notebook name.");
+  let notebookToRename = findNotebookById(notebookId);
+  if (!notebookToRename) {
     return false;
   }
 
-  let notebookToRename = notebooks.find(
-    (notebook) => notebook.id === notebookId
-  );
-
-  if (notebookToRename) {
-    notebookToRename.name = newName.trim();
-    saveData(notebooks);
-  } else {
-    console.warn("Notebook not found for renaming.");
-  }
+  notebookToRename.name = newName.trim();
+  saveData(notebooks);
+  return true;
 };
 
 const addNote = (notebookId, title, content) => {
-  if (
-    !notebookId ||
-    typeof notebookId !== "string" ||
-    notebookId.trim() === ""
-  ) {
-    console.error("Invalid notebook ID.");
-    return false;
-  }
-
   if (!title || typeof title !== "string") {
     console.error("Invalid note title.");
     return false;
@@ -112,9 +127,8 @@ const addNote = (notebookId, title, content) => {
     return false;
   }
 
-  let notebook = notebooks.find((notebook) => notebook.id === notebookId);
+  let notebook = findNotebookById(notebookId);
   if (!notebook) {
-    console.warn("Notebook not found for adding note.");
     return false;
   }
 
@@ -125,23 +139,12 @@ const addNote = (notebookId, title, content) => {
 };
 
 const deleteNote = (notebookId, noteId) => {
-  if (
-    !notebookId ||
-    typeof notebookId !== "string" ||
-    notebookId.trim() === ""
-  ) {
-    console.error("Invalid notebook ID.");
+  if (!validateNonEmptyString(noteId, "note ID")) {
     return false;
   }
 
-  if (!noteId || typeof noteId !== "string" || noteId.trim() === "") {
-    console.error("Invalid note ID.");
-    return false;
-  }
-
-  let notebook = notebooks.find((notebook) => notebook.id === notebookId);
+  let notebook = findNotebookById(notebookId);
   if (!notebook) {
-    console.warn("Notebook not found for deleting note.");
     return false;
   }
 
@@ -158,29 +161,8 @@ const deleteNote = (notebookId, noteId) => {
 };
 
 const editNote = (notebookId, noteId, newTitle, newContent) => {
-  if (
-    !notebookId ||
-    typeof notebookId !== "string" ||
-    notebookId.trim() === ""
-  ) {
-    console.error("Invalid notebook ID.");
-    return false;
-  }
-
-  if (!noteId || typeof noteId !== "string" || noteId.trim() === "") {
-    console.error("Invalid note ID.");
-    return false;
-  }
-
-  let notebook = notebooks.find((notebook) => notebook.id === notebookId);
-  if (!notebook) {
-    console.warn("Notebook not found for editing note.");
-    return false;
-  }
-
-  let noteToEdit = notebook.notes.find((note) => note.id === noteId);
+  let noteToEdit = findNoteInNotebookById(notebookId, noteId);
   if (!noteToEdit) {
-    console.warn("Note not found for editing.");
     return false;
   }
 
@@ -192,10 +174,17 @@ const editNote = (notebookId, noteId, newTitle, newContent) => {
     noteToEdit.content = newContent.trim();
   }
 
-  noteToEdit.updatedAt = Date.now();
+  const titleChanged = newTitle && newTitle.trim() !== noteToEdit.title;
+  const contentChanged = newContent && newContent.trim() !== noteToEdit.content;
 
-  saveData(notebooks);
-  return true;
+  if (!titleChanged && !contentChanged) {
+    console.warn("No changes made to the note.");
+    return true;
+  } else {
+    noteToEdit.updatedAt = Date.now();
+    saveData(notebooks);
+    return true;
+  }
 };
 
 export {
