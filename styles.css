@@ -580,13 +580,6 @@ main {
   z-index: 2000;
   width: 90%;
   max-width: 600px;
-  display: none;
-  flex-direction: column;
-}
-
-::backdrop {
-  background-color: var(--color-shadow-dark);
-  opacity: 0.75;
 }
 
 .close-modal-btn {
@@ -594,7 +587,6 @@ main {
   border: none;
   cursor: pointer;
   color: var(--color-accent-icon);
-  align-self: flex-end;
   margin-bottom: 1rem;
 }
 
