@@ -1,13 +1,13 @@
-import { getNotebooks } from "../data/appData.js";
+import { getNotebooks, findNotebookById, findNoteInNotebookById } from "../data/appData.js";
 
 /* DOM Elements */
 const notebooksList = document.getElementById("notebooks-list");
 const notesContainer = document.querySelector(".notes-container");
 const noteModal = document.getElementById("note-modal");
-const modalTitle = document.querySelector(".modal-title");
-const noteTitleInput = document.getElementById("note-title");
-const noteContentInput = document.getElementById("note-content");
-const noteSaveBtn = document.getElementById("save-note-btn");
+const modalTitle = noteModal.querySelector(".modal-title");
+const noteTitleInput = noteModal.getElementById("note-title");
+const noteContentInput = noteModal.getElementById("note-content");
+const noteSaveBtn = noteModal.getElementById("save-note-btn");
 
 const formatRelativeDate = (dateString) => {
   const date = new Date(dateString);
@@ -60,6 +60,10 @@ const renderNotebooks = (activeNotebookId) => {
     notebookItem.classList.add("notebook-item");
     notebookItem.dataset.notebookId = notebook.id;
 
+    if (notebook.id === activeNotebookId) {
+      notebookItem.classList.add("active");
+    }
+
     const notebookNameSpan = document.createElement("span");
     notebookNameSpan.classList.add("notebook-name");
     notebookNameSpan.textContent = notebook.name;
@@ -103,9 +107,7 @@ const renderNotebooks = (activeNotebookId) => {
 };
 
 const renderNotes = (notebookId) => {
-  const activeNotebook = getNotebooks().find(
-    (notebook) => notebook.id === notebookId
-  );
+  const activeNotebook = findNotebookById(notebookId);
   const notes = activeNotebook ? activeNotebook.notes : [];
   notesContainer.innerHTML = ""; // Clear existing notes
 
@@ -219,3 +221,5 @@ const renderActiveNoteEditor = (notebookId, noteId = null, mode = "create") => {
 
   noteModal.showModal();
 };
+
+export { renderNotebooks, renderNotes, renderActiveNoteEditor };
