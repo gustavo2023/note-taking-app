@@ -38,7 +38,7 @@ const findNoteInNotebookById = (notebookId, noteId) => {
 
   if (!note) {
     console.warn(
-      `Note not found with ID: ${noteId} in notebook "${notebook?.name}".`
+      `Note not found with ID: ${noteId} in notebook "${notebook.name}".`
     );
     return null;
   }

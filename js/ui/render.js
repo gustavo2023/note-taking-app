@@ -12,6 +12,11 @@ import {
 /* DOM Elements */
 const notebooksList = document.getElementById("notebooks-list");
 const notesContainer = document.querySelector(".notes-container");
+const noteModal = document.getElementById("note-modal");
+const modalTitle = document.querySelector(".modal-title");
+const noteTitleInput = document.getElementById("note-title");
+const noteContentInput = document.getElementById("note-content");
+const noteSaveBtn = document.getElementById("save-note-btn");
 
 const formatRelativeDate = (dateString) => {
   const date = new Date(dateString);
@@ -177,4 +182,49 @@ const renderNotes = (notebookId) => {
 
     notesContainer.appendChild(noteItem);
   });
+};
+
+const renderActiveNoteEditor = (notebookId, noteId = null, mode = "create") => {
+  if (mode === "edit" && noteId) {
+    modalTitle.textContent = "Edit Note";
+  } else if (mode === "view" && noteId) {
+    modalTitle.textContent = "View Note";
+  } else {
+    modalTitle.textContent = "Create Note";
+  }
+
+  if (noteId) {
+    const noteToDisplay = findNoteInNotebookById(notebookId, noteId);
+
+    if (noteToDisplay) {
+      noteTitleInput.value = noteToDisplay.title || "";
+      noteContentInput.value = noteToDisplay.content || "";
+
+      // TODO: Load sessionStorage draft here if it's the currently edited note
+    } else {
+      console.warn(
+        `Note with ID ${noteId} not found in notebook with ID ${notebookId}.`
+      );
+      noteTitleInput.value = "";
+      noteContentInput.value = "";
+      return;
+    }
+  } else {
+    noteTitleInput.value = "";
+    noteContentInput.value = "";
+
+    // TODO: Clear sessionStorage draft if creating a new note. Load sessionStorage draft if it exists.
+  }
+
+  if (mode === "view") {
+    noteTitleInput.readOnly = true;
+    noteContentInput.readOnly = true;
+    noteSaveBtn.style.display = "none";
+  } else {
+    noteTitleInput.readOnly = false;
+    noteContentInput.readOnly = false;
+    noteSaveBtn.style.display = "flex";
+  }
+
+  noteModal.showModal();
 };
