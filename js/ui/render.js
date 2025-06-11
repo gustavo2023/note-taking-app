@@ -1,13 +1,4 @@
-import {
-  initializeAppData,
-  getNotebooks,
-  addNotebook,
-  deleteNotebook,
-  renameNotebook,
-  addNote,
-  deleteNote,
-  editNote,
-} from "../data/appData.js";
+import { getNotebooks } from "../data/appData.js";
 
 /* DOM Elements */
 const notebooksList = document.getElementById("notebooks-list");
