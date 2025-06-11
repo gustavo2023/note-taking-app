@@ -13,6 +13,39 @@ import {
 const notebooksList = document.getElementById("notebooks-list");
 const notesContainer = document.querySelector(".notes-container");
 
+const formatRelativeDate = (dateString) => {
+  const date = new Date(dateString);
+  const now = new Date();
+  const diffInSeconds = Math.floor((now - date) / 1000);
+  const diffInDays = Math.floor(diffInSeconds / 86400);
+
+  if (diffInDays === 0) {
+    const diffInHours = Math.floor(diffInSeconds / 3600);
+    if (diffInHours < 1) {
+      const diffInMinutes = Math.floor(diffInSeconds / 60);
+      if (diffInMinutes < 1) return "Just now";
+      return `${diffInMinutes} minute${diffInMinutes > 1 ? "s" : ""} ago`;
+    }
+    return `${diffInHours} hour${diffInHours > 1 ? "s" : ""} ago`;
+  }
+  if (diffInDays === 1) return "Yesterday";
+  if (diffInDays < 7) return `${diffInDays} days ago`;
+  if (diffInDays < 30) {
+    const weeks = Math.floor(diffInDays / 7);
+    return `${weeks} week${weeks > 1 ? "s" : ""} ago`;
+  }
+  if (diffInDays < 365) {
+    const months = Math.floor(diffInDays / 30);
+    return `${months} month${months > 1 ? "s" : ""} ago`;
+  }
+  // Default to a simple date format if older than a year or for very recent future dates
+  return date.toLocaleDateString(undefined, {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
+};
+
 const renderNotebooks = (activeNotebookId) => {
   const notebooks = getNotebooks();
   notebooksList.innerHTML = ""; // Clear existing notebooks
@@ -104,14 +137,17 @@ const renderNotes = (notebookId) => {
 
     const noteDate = document.createElement("span");
     noteDate.classList.add("note-creation-date");
-    noteDate.textContent = new Date(note.createdAt).toLocaleString();
+    noteDate.textContent = formatRelativeDate(note.createdAt);
 
     const noteActions = document.createElement("div");
     noteActions.classList.add("note-buttons-container");
 
     const deleteNoteBtn = document.createElement("button");
     deleteNoteBtn.classList.add("delete-note-btn");
-    deleteNoteBtn.setAttribute("aria-label", `Delete note ${note.title || "Untitled Note"}`);
+    deleteNoteBtn.setAttribute(
+      "aria-label",
+      `Delete note ${note.title || "Untitled Note"}`
+    );
 
     // Create delete icon
     const deleteIcon = document.createElement("i");
@@ -120,7 +156,10 @@ const renderNotes = (notebookId) => {
 
     const editNoteBtn = document.createElement("button");
     editNoteBtn.classList.add("edit-note-btn");
-    editNoteBtn.setAttribute("aria-label", `Edit note ${note.title || "Untitled Note"}`);
+    editNoteBtn.setAttribute(
+      "aria-label",
+      `Edit note ${note.title || "Untitled Note"}`
+    );
 
     // Create edit icon
     const editIcon = document.createElement("i");
