@@ -132,7 +132,6 @@ textarea:not([rows]) {
 .dark-mode {
   /* Main Backgrounds */
   --color-background-page: #222831;
-  --color-background-main-content: #393e46;
   --color-background-sidebar: #333842;
   --color-background-note-card: #393e46;
   --color-background-modal: #30343a;
@@ -150,7 +149,7 @@ textarea:not([rows]) {
 
   /* Accent Colors (for buttons, active states, icons) */
   --color-accent-primary: #63b3ed;
-  --color-accent-primary-hover: #4ea5d7;
+  --color-accent-primary-hover: #3f8bb8;
   --color-accent-secondary: #48bb78;
   --color-accent-delete: #ef5350;
   --color-accent-edit: #ffd700;
@@ -369,6 +368,20 @@ input:checked + .toggle-text::before {
   padding: 0.5rem 0.8rem;
   border-radius: 10px;
   cursor: pointer;
+}
+
+.notebook-item.active {
+  background-color: var(--color-accent-primary);
+  color: var(--color-text-on-accent);
+  box-shadow: 0 2px 5px var(--color-shadow-light);
+}
+.notebook-item.active .notebook-name,
+.notebook-item.active .notebook-action-btns button {
+  color: var(--color-text-on-accent);
+}
+
+.notebook-item.active:hover {
+  background-color: var(--color-accent-primary-hover);
 }
 
 .notebook-name {
