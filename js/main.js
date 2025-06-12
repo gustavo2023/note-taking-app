@@ -1,12 +1,45 @@
 // -- Importing necessary modules and services --
 import { loadTheme, toggleTheme } from "./services/theme.js";
+import {
+  initializeAppData,
+  getNotebooks,
+  addNotebook,
+  deleteNotebook,
+  renameNotebook,
+  addNote,
+  deleteNote,
+  editNote,
+} from "./data/appData.js";
+import {
+  renderNotebooks,
+  renderNotes,
+  renderActiveNoteEditor,
+} from "./ui/render.js";
+import { saveDraft, loadDraft, clearDraft } from "./services/draftStorage.js";
 
 // -- DOM Elements --
+
+// Sidebar and related elements
 const sidebar = document.querySelector(".sidebar");
 const openSidebarButton = document.querySelector(".menu-open-btn");
 const closeSidebarButton = document.querySelector(".close-menu-btn");
 const sidebarOverlay = document.querySelector(".overlay");
+const notebooksList = document.getElementById("notebooks-list");
+// Buttons in sidebar
+const newNoteButton = document.querySelector(".new-note-btn");
+const newNotebookButton = document.querySelector(".new-notebook-btn");
+
 const themeToggleButton = document.querySelector(".theme-toggle");
+const notesContainer = document.querySelector(".notes-container");
+
+// Modal elements
+const noteModal = document.getElementById("note-modal");
+const closeModalButton = noteModal.querySelector(".close-modal-btn");
+const modalForm = document.getElementById("note-form");
+const modalTitle = noteModal.querySelector(".modal-title");
+const noteTitleInput = noteModal.querySelector(".note-title");
+const noteContentInput = noteModal.querySelector(".note-content");
+const noteSaveBtn = document.getElementById("save-note-btn");
 
 //  -- Sidebar Toggle Functionality --
 const toggleSidebar = () => {
