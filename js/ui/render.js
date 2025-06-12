@@ -1,13 +1,17 @@
-import { getNotebooks, findNotebookById, findNoteInNotebookById } from "../data/appData.js";
+import {
+  getNotebooks,
+  findNotebookById,
+  findNoteInNotebookById,
+} from "../data/appData.js";
 
 /* DOM Elements */
 const notebooksList = document.getElementById("notebooks-list");
 const notesContainer = document.querySelector(".notes-container");
 const noteModal = document.getElementById("note-modal");
 const modalTitle = noteModal.querySelector(".modal-title");
-const noteTitleInput = noteModal.getElementById("note-title");
-const noteContentInput = noteModal.getElementById("note-content");
-const noteSaveBtn = noteModal.getElementById("save-note-btn");
+const noteTitleInput = noteModal.querySelector(".note-title");
+const noteContentInput = noteModal.querySelector(".note-content");
+const noteSaveBtn = document.getElementById("save-note-btn");
 
 const formatRelativeDate = (dateString) => {
   const date = new Date(dateString);

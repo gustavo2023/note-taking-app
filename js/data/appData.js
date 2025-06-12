@@ -196,4 +196,6 @@ export {
   addNote,
   deleteNote,
   editNote,
+  findNotebookById,
+  findNoteInNotebookById,
 };
