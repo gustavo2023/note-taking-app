@@ -41,6 +41,9 @@ const noteTitleInput = noteModal.querySelector(".note-title");
 const noteContentInput = noteModal.querySelector(".note-content");
 const noteSaveBtn = document.getElementById("save-note-btn");
 
+let activeNotebookId = null;
+let currentEditingNoteId = null;
+
 //  -- Sidebar Toggle Functionality --
 const toggleSidebar = () => {
   sidebar.classList.toggle("open");
@@ -66,8 +69,14 @@ const handleEscapeKeydown = (event) => {
   }
 };
 
+const updateUI = () => {
+  renderNotebooks(activeNotebookId);
+  renderNotes(activeNotebookId);
+};
+
 // -- Function to initialize the application --
 const initializeApp = () => {
+  // Initialize Themes
   if (themeToggleButton) {
     loadTheme(themeToggleButton);
     themeToggleButton.addEventListener("change", () => {
@@ -76,6 +85,17 @@ const initializeApp = () => {
   } else {
     console.warn("Theme toggle button not found.");
   }
+
+  // Initialize App Data
+  initializeAppData();
+
+  const notebooks = getNotebooks();
+  if (notebooks.length > 0) {
+    activeNotebookId = notebooks[0].id; // Set the first notebook as active
+  }
+
+  // Render initial UI
+  updateUI();
 };
 
 // Event listeners for opening and closing the sidebar
