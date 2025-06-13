@@ -175,6 +175,49 @@ const handleNotebookListClick = (event) => {
   }
 };
 
+const handleEditNote = (notebookId, noteId) => {
+  const noteToEdit = findNoteInNotebookById(notebookId, noteId);
+
+  if (!noteToEdit) {
+    return;
+  }
+
+  currentEditingNoteId = noteId;
+  renderActiveNoteEditor(notebookId, noteId, "edit");
+};
+
+const handleNewNote = (notebookId, noteId) => {
+  const noteToDelete = findNoteInNotebookById(notebookId, noteId);
+
+  if (!noteToDelete) {
+    return;
+  }
+
+  const noteTitle = noteToDelete.title || "Untitled Note";
+
+  if (confirm(`Are you sure you want to delete the note "${noteTitle}"?`)) {
+    const success = deleteNote(notebookId, noteId);
+
+    if (success) {
+      alert(`Note "${noteTitle}" deleted successfully.`);
+      updateUI();
+    } else {
+      alert(`Failed to delete note "${noteTitle}".`);
+    }
+  }
+};
+
+const handleViewNote = (notebookId, noteId) => {
+  const noteToView = findNoteInNotebookById(notebookId, noteId);
+
+  if (!noteToView) {
+    return;
+  }
+
+  currentEditingNoteId = null;
+  renderActiveNoteEditor(notebookId, noteId, "view");
+};
+
 // -- Function to initialize the application --
 const initializeApp = () => {
   // Initialize Themes
