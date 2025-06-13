@@ -368,12 +368,13 @@ input:checked + .toggle-text::before {
   padding: 0.5rem 0.8rem;
   border-radius: 10px;
   cursor: pointer;
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+  border: 2px solid transparent;
 }
 
 .notebook-item.active {
-  background-color: var(--color-accent-primary);
-  color: var(--color-text-on-accent);
-  box-shadow: 0 2px 5px var(--color-shadow-light);
+  background-color: #aa8bdb;
+  border: 3px solid #5b127c;
 }
 .notebook-item.active .notebook-name,
 .notebook-item.active .notebook-action-btns button {
@@ -381,7 +382,7 @@ input:checked + .toggle-text::before {
 }
 
 .notebook-item.active:hover {
-  background-color: var(--color-accent-primary-hover);
+  background-color: #7352a3;
 }
 
 .notebook-name {
@@ -650,7 +651,7 @@ main {
   transition: border-color 0.3s ease-in-out;
 }
 
-button[type="submit"] {
+.save-note-btn {
   background-color: var(--color-accent-primary);
   color: var(--color-text-on-accent);
   padding: 0.5rem 1rem;
@@ -658,6 +659,9 @@ button[type="submit"] {
   border: none;
   cursor: pointer;
   font-size: var(--font-size-regular);
+  text-align: center;
+  justify-content: center;
+  align-items: center;
 }
 
 button[type="submit"]:hover {
