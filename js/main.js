@@ -13,6 +13,7 @@ import {
   findNoteInNotebookById,
 } from "./data/appData.js";
 import {
+  updateMainContentTitle,
   renderNotebooks,
   renderNotes,
   renderActiveNoteEditor,
@@ -76,6 +77,10 @@ const handleEscapeKeydown = (event) => {
 const updateUI = () => {
   renderNotebooks(activeNotebookId);
   renderNotes(activeNotebookId);
+
+  const activeNotebook = findNotebookById(activeNotebookId);
+  const notebookName = activeNotebook ? activeNotebook.name : null;
+  updateMainContentTitle(notebookName);
 };
 
 const handleDeleteNotebook = (notebookId) => {

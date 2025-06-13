@@ -6,6 +6,7 @@ import {
 import { saveDraft, loadDraft, clearDraft } from "../services/draftStorage.js";
 
 /* DOM Elements */
+const mainContentNotebookTitle = document.querySelector(".notebook-title");
 const notesSection = document.querySelector(".notes-section");
 const notebooksList = document.getElementById("notebooks-list");
 const notesContainer = document.querySelector(".notes-container");
@@ -46,6 +47,14 @@ const formatRelativeDate = (dateString) => {
     month: "short",
     day: "numeric",
   });
+};
+
+const updateMainContentTitle = (notebookName) => {
+  if (notebookName) {
+    mainContentNotebookTitle.textContent = notebookName;
+  } else {
+    mainContentNotebookTitle.textContent = "Select a Notebook";
+  }
 };
 
 const renderNotebooks = (activeNotebookId) => {
@@ -248,4 +257,9 @@ const renderActiveNoteEditor = (notebookId, noteId = null, mode = "create") => {
   noteModal.showModal();
 };
 
-export { renderNotebooks, renderNotes, renderActiveNoteEditor };
+export {
+  updateMainContentTitle,
+  renderNotebooks,
+  renderNotes,
+  renderActiveNoteEditor,
+};
