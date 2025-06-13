@@ -57,6 +57,8 @@ const toggleSidebar = () => {
   sidebar.setAttribute("aria-hidden", !isOpen);
   sidebarOverlay.setAttribute("aria-hidden", !isOpen);
 
+  sidebar.toggleAttribute("inert", !isOpen);
+
   // Focus management
   if (isOpen) {
     closeSidebarButton.focus();
