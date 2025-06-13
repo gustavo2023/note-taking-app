@@ -321,6 +321,10 @@ const handleNoteFormSubmit = (event) => {
   }
 };
 
+const handleCloseModalClick = () => {
+  noteModal.close();
+};
+
 // -- Function to initialize the application --
 const initializeApp = () => {
   // Initialize Themes
@@ -354,6 +358,9 @@ const initializeApp = () => {
   notesContainer.addEventListener("click", handleNotesContainerClick);
   newNoteButton.addEventListener("click", handleNewNoteClick);
   newNotebookButton.addEventListener("click", handleNewNotebookClick);
+
+  modalForm.addEventListener("submit", handleNoteFormSubmit);
+  closeModalButton.addEventListener("click", handleCloseModalClick);
 };
 
 // Initialize the application
