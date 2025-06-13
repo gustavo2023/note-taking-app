@@ -111,8 +111,13 @@ const renderNotebooks = (activeNotebookId) => {
 };
 
 const renderNotes = (notebookId) => {
-  const activeNotebook = findNotebookById(notebookId);
-  const notes = activeNotebook ? activeNotebook.notes : [];
+  let notes = [];
+
+  if (notebookId) {
+    const activeNotebook = findNotebookById(notebookId);
+    notes = activeNotebook ? activeNotebook.notes : [];
+  }
+  
   notesContainer.innerHTML = ""; // Clear existing notes
 
   if (notes.length === 0) {
