@@ -3,6 +3,7 @@ import {
   findNotebookById,
   findNoteInNotebookById,
 } from "../data/appData.js";
+import { saveDraft, loadDraft, clearDraft } from "../services/draftStorage.js";
 
 /* DOM Elements */
 const notesSection = document.querySelector(".notes-section");
@@ -211,7 +212,9 @@ const renderActiveNoteEditor = (notebookId, noteId = null, mode = "create") => {
       noteTitleInput.value = noteToDisplay.title || "";
       noteContentInput.value = noteToDisplay.content || "";
 
-      // TODO: Load sessionStorage draft here if it's the currently edited note
+      if (mode === "view") {
+        modalTitle.textContent = noteToDisplay.title || "View Note";
+      }
     } else {
       console.warn(
         `Note with ID ${noteId} not found in notebook with ID ${notebookId}.`
@@ -224,7 +227,11 @@ const renderActiveNoteEditor = (notebookId, noteId = null, mode = "create") => {
     noteTitleInput.value = "";
     noteContentInput.value = "";
 
-    // TODO: Clear sessionStorage draft if creating a new note. Load sessionStorage draft if it exists.
+    const draftContent = loadDraft();
+
+    if (draftContent) {
+      noteContentInput.value = draftContent;
+    }
   }
 
   if (mode === "view") {
