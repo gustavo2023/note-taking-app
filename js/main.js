@@ -9,6 +9,8 @@ import {
   addNote,
   deleteNote,
   editNote,
+  findNotebookById,
+  findNoteInNotebookById,
 } from "./data/appData.js";
 import {
   renderNotebooks,
@@ -72,6 +74,39 @@ const handleEscapeKeydown = (event) => {
 const updateUI = () => {
   renderNotebooks(activeNotebookId);
   renderNotes(activeNotebookId);
+};
+
+const handleDeleteNotebook = (notebookId) => {
+  const notebookToDelete = findNotebookById(notebookId);
+
+  if (!notebookToDelete) {
+    return false;
+  }
+
+  const notebookName = notebookToDelete.name;
+
+  if (
+    confirm(`Are you sure you want to delete the notebook "${notebookName}"?`)
+  ) {
+    const success = deleteNotebook(notebookId);
+
+    if (success) {
+      alert(`Notebook "${notebookName}" deleted successfully.`);
+      if (activeNotebookId === notebookId) {
+        const remainingNotebooks = getNotebooks();
+        activeNotebookId =
+          remainingNotebooks.length > 0 ? remainingNotebooks[0].id : null;
+      }
+
+      updateUI();
+      return true;
+    } else {
+      alert(`Failed to delete notebook "${notebookName}".`);
+      return false;
+    }
+  }
+
+  return false;
 };
 
 // -- Function to initialize the application --
