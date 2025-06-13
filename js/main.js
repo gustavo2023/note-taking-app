@@ -159,6 +159,22 @@ const handleSelectedNotebook = (notebookId) => {
   return false;
 };
 
+const handleNotebookListClick = (event) => {
+  const clickedElement = event.target.closest(".notebook-item");
+
+  if (clickedElement) {
+    const notebookId = clickedElement.dataset.notebookId;
+
+    if (event.target.closest(".delete-notebook-btn")) {
+      handleDeleteNotebook(notebookId);
+    } else if (event.target.closest(".edit-notebook-btn")) {
+      handleRenameNotebook(notebookId);
+    } else {
+      handleSelectedNotebook(notebookId);
+    }
+  }
+};
+
 // -- Function to initialize the application --
 const initializeApp = () => {
   // Initialize Themes
@@ -181,13 +197,15 @@ const initializeApp = () => {
 
   // Render initial UI
   updateUI();
-};
 
-// Event listeners for opening and closing the sidebar
-document.addEventListener("keydown", handleEscapeKeydown);
-sidebarOverlay.addEventListener("click", toggleSidebar);
-openSidebarButton.addEventListener("click", toggleSidebar);
-closeSidebarButton.addEventListener("click", toggleSidebar);
+  // Event listeners for opening and closing the sidebar
+  document.addEventListener("keydown", handleEscapeKeydown);
+  sidebarOverlay.addEventListener("click", toggleSidebar);
+  openSidebarButton.addEventListener("click", toggleSidebar);
+  closeSidebarButton.addEventListener("click", toggleSidebar);
+
+  notebooksList.addEventListener("click", handleNotebookListClick);
+};
 
 // Initialize the application
 initializeApp();
