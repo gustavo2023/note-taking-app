@@ -179,6 +179,7 @@ const handleEditNote = (notebookId, noteId) => {
   const noteToEdit = findNoteInNotebookById(notebookId, noteId);
 
   if (!noteToEdit) {
+    console.warn(`Note with ID ${noteId} not found in notebook ${notebookId}.`);
     return;
   }
 
@@ -190,6 +191,7 @@ const handleDeleteNote = (notebookId, noteId) => {
   const noteToDelete = findNoteInNotebookById(notebookId, noteId);
 
   if (!noteToDelete) {
+    console.warn(`Note with ID ${noteId} not found in notebook ${notebookId}.`);
     return;
   }
 
@@ -211,6 +213,7 @@ const handleViewNote = (notebookId, noteId) => {
   const noteToView = findNoteInNotebookById(notebookId, noteId);
 
   if (!noteToView) {
+    console.warn(`Note with ID ${noteId} not found in notebook ${notebookId}.`);
     return;
   }
 
@@ -226,6 +229,7 @@ const handleNotesContainerClick = (event) => {
     const notebookId = activeNotebookId;
 
     if (!notebookId) {
+      console.warn("No active notebook selected.");
       return;
     }
 
@@ -237,6 +241,16 @@ const handleNotesContainerClick = (event) => {
       handleViewNote(notebookId, noteId);
     }
   }
+};
+
+const handleNewNoteClick = () => {
+  if (!activeNotebookId) {
+    alert("Please select a notebook first.");
+    return;
+  }
+
+  currentEditingNoteId = null; // Reset editing note ID
+  renderActiveNoteEditor(activeNotebookId);
 };
 
 // -- Function to initialize the application --
@@ -270,6 +284,7 @@ const initializeApp = () => {
 
   notebooksList.addEventListener("click", handleNotebookListClick);
   notesContainer.addEventListener("click", handleNotesContainerClick);
+  newNoteButton.addEventListener("click", handleNewNoteClick);
 };
 
 // Initialize the application
