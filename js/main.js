@@ -253,6 +253,31 @@ const handleNewNoteClick = () => {
   renderActiveNoteEditor(activeNotebookId);
 };
 
+const handleNewNotebookClick = () => {
+  const notebookName = prompt("Enter a name for the new notebook:");
+
+  if (notebookName === null) {
+    return; // User cancelled
+  }
+
+  if (notebookName.trim() === "") {
+    alert("Notebook name cannot be empty.");
+    return;
+  }
+
+  const success = addNotebook(notebookName);
+
+  if (success) {
+    const newNotebooks = getNotebooks();
+
+    activeNotebookId = newNotebooks[newNotebooks.length - 1].id; // Set the newly created notebook as active
+    updateUI();
+    alert(`Notebook "${notebookName}" created successfully.`);
+  } else {
+    alert(`Failed to create notebook "${notebookName}".`);
+  }
+};
+
 // -- Function to initialize the application --
 const initializeApp = () => {
   // Initialize Themes
@@ -285,6 +310,7 @@ const initializeApp = () => {
   notebooksList.addEventListener("click", handleNotebookListClick);
   notesContainer.addEventListener("click", handleNotesContainerClick);
   newNoteButton.addEventListener("click", handleNewNoteClick);
+  newNotebookButton.addEventListener("click", handleNewNotebookClick);
 };
 
 // Initialize the application
