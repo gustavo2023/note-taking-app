@@ -109,6 +109,56 @@ const handleDeleteNotebook = (notebookId) => {
   return false;
 };
 
+const handleRenameNotebook = (notebookId) => {
+  const notebookToRename = findNotebookById(notebookId);
+
+  if (!notebookToRename) {
+    return false;
+  }
+
+  const currentName = notebookToRename.name;
+  const newName = prompt(
+    `Enter a new name for the notebook "${currentName}":`,
+    currentName
+  );
+
+  if (newName === null) {
+    return false;
+  }
+
+  if (newName.trim() === "") {
+    alert("Notebook name cannot be empty.");
+    return false;
+  }
+
+  const success = renameNotebook(notebookId, newName);
+
+  if (success) {
+    alert(`Notebook renamed to ${newName.trim()} successfully.`);
+    updateUI();
+    return true;
+  } else {
+    alert("Failed to rename notebook");
+    return false;
+  }
+};
+
+const handleSelectedNotebook = (notebookId) => {
+  const selectedNotebook = findNotebookById(notebookId);
+
+  if (!selectedNotebook) {
+    return false;
+  }
+
+  if (activeNotebookId !== notebookId) {
+    activeNotebookId = notebookId;
+    updateUI();
+    return true;
+  }
+
+  return false;
+};
+
 // -- Function to initialize the application --
 const initializeApp = () => {
   // Initialize Themes
