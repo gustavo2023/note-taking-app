@@ -435,7 +435,6 @@ input:checked + .toggle-text::before {
 main {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   gap: 1.5rem;
   padding: 1.5rem;
 }
@@ -465,6 +464,17 @@ main {
   flex-direction: column;
   justify-content: center;
   gap: 1.5rem;
+}
+
+.no-notes-msg {
+  align-self: center;
+  color: var(--color-text-tertiary);
+  font-size: clamp(
+    var(--font-size-large),
+    1.5vw + 0.25rem,
+    var(--font-size-xxl)
+  );
+  text-align: center;
 }
 
 .notebook-title {
