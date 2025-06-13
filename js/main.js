@@ -186,7 +186,7 @@ const handleEditNote = (notebookId, noteId) => {
   renderActiveNoteEditor(notebookId, noteId, "edit");
 };
 
-const handleNewNote = (notebookId, noteId) => {
+const handleDeleteNote = (notebookId, noteId) => {
   const noteToDelete = findNoteInNotebookById(notebookId, noteId);
 
   if (!noteToDelete) {
@@ -216,6 +216,27 @@ const handleViewNote = (notebookId, noteId) => {
 
   currentEditingNoteId = null;
   renderActiveNoteEditor(notebookId, noteId, "view");
+};
+
+const handleNotesContainerClick = (event) => {
+  const clickedElement = event.target.closest(".note");
+
+  if (clickedElement) {
+    const noteId = clickedElement.dataset.noteId;
+    const notebookId = activeNotebookId;
+
+    if (!notebookId) {
+      return;
+    }
+
+    if (event.target.closest(".edit-note-btn")) {
+      handleEditNote(notebookId, noteId);
+    } else if (event.target.closest(".delete-note-btn")) {
+      handleDeleteNote(notebookId, noteId);
+    } else {
+      handleViewNote(notebookId, noteId);
+    }
+  }
 };
 
 // -- Function to initialize the application --
@@ -248,6 +269,7 @@ const initializeApp = () => {
   closeSidebarButton.addEventListener("click", toggleSidebar);
 
   notebooksList.addEventListener("click", handleNotebookListClick);
+  notesContainer.addEventListener("click", handleNotesContainerClick);
 };
 
 // Initialize the application
