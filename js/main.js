@@ -278,6 +278,49 @@ const handleNewNotebookClick = () => {
   }
 };
 
+const handleNoteFormSubmit = (event) => {
+  event.preventDefault();
+
+  const title = noteTitleInput.value.trim();
+  const content = noteContentInput.value.trim();
+
+  if (!activeNotebookId) {
+    alert("Please select a notebook first. Closing the modal.");
+    noteModal.close();
+    return;
+  }
+
+  let success = false;
+  let actionMessage = "";
+
+  if (currentEditingNoteId) {
+    success = editNote(activeNotebookId, currentEditingNoteId, title, content);
+
+    if (success) {
+      actionMessage = `Note "${title}" updated successfully.`;
+    } else {
+      actionMessage = `Failed to update note "${title}".` || "Untitled Note";
+    }
+  } else {
+    success = addNote(activeNotebookId, title, content);
+    if (success) {
+      actionMessage =
+        `Note "${title}" created successfully.` || "Untitled Note created.";
+    } else {
+      actionMessage = `Failed to create note "${title}".` || "Untitled Note";
+    }
+  }
+
+  if (success) {
+    alert(actionMessage);
+    updateUI();
+    noteModal.close();
+    clearDraft(); // Clear draft after saving
+  } else {
+    alert(actionMessage);
+  }
+};
+
 // -- Function to initialize the application --
 const initializeApp = () => {
   // Initialize Themes
