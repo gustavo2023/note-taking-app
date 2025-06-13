@@ -37,8 +37,8 @@ const noteModal = document.getElementById("note-modal");
 const closeModalButton = noteModal.querySelector(".close-modal-btn");
 const modalForm = document.getElementById("note-form");
 const modalTitle = noteModal.querySelector(".modal-title");
-const noteTitleInput = noteModal.querySelector(".note-title");
-const noteContentInput = noteModal.querySelector(".note-content");
+const noteTitleInput = document.getElementById("note-title");
+const noteContentInput = document.getElementById("note-content");
 const noteSaveBtn = document.getElementById("save-note-btn");
 
 let activeNotebookId = null;

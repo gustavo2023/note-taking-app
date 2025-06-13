@@ -221,6 +221,7 @@ const renderActiveNoteEditor = (notebookId, noteId = null, mode = "create") => {
       );
       noteTitleInput.value = "";
       noteContentInput.value = "";
+      noteModal.close();
       return;
     }
   } else {
