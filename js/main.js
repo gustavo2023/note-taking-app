@@ -325,6 +325,17 @@ const handleCloseModalClick = () => {
   noteModal.close();
 };
 
+const handleNoteInputForDraft = () => {
+  if (currentEditingNoteId === null) {
+    const content = noteContentInput.value.trim();
+    if (content) {
+      saveDraft(content);
+    } else {
+      clearDraft(); // Clear draft if content is empty
+    }
+  }
+};
+
 // -- Function to initialize the application --
 const initializeApp = () => {
   // Initialize Themes
@@ -361,6 +372,9 @@ const initializeApp = () => {
 
   modalForm.addEventListener("submit", handleNoteFormSubmit);
   closeModalButton.addEventListener("click", handleCloseModalClick);
+
+  noteContentInput.addEventListener("input", handleNoteInputForDraft);
+  noteTitleInput.addEventListener("input", handleNoteInputForDraft);
 };
 
 // Initialize the application
