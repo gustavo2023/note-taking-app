@@ -5,6 +5,7 @@ import {
 } from "../data/appData.js";
 
 /* DOM Elements */
+const notesSection = document.querySelector(".notes-section");
 const notebooksList = document.getElementById("notebooks-list");
 const notesContainer = document.querySelector(".notes-container");
 const noteModal = document.getElementById("note-modal");
@@ -112,17 +113,25 @@ const renderNotebooks = (activeNotebookId) => {
 
 const renderNotes = (notebookId) => {
   let notes = [];
+  const existingNoNotesMsg = notesSection.querySelector(".no-notes-msg");
+
+  if (existingNoNotesMsg) {
+    existingNoNotesMsg.remove();
+  }
 
   if (notebookId) {
     const activeNotebook = findNotebookById(notebookId);
     notes = activeNotebook ? activeNotebook.notes : [];
   }
-  
+
   notesContainer.innerHTML = ""; // Clear existing notes
 
   if (notes.length === 0) {
-    notesContainer.textContent =
-      "No notes available. Click 'New Note' to create one.";
+    const noNotesMessage = document.createElement("p");
+    noNotesMessage.classList.add("no-notes-msg");
+    noNotesMessage.textContent =
+      "No notes available in this notebook. Create a new note to get started.";
+    notesSection.appendChild(noNotesMessage);
     return;
   }
 
