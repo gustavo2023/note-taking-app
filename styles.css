@@ -721,9 +721,9 @@ button[type="submit"]:hover {
 
 .modal-action-buttons {
   display: flex;
-  justify-content: flex-end; /* Align buttons to the right */
+  justify-content: flex-end; 
   gap: 0.8rem;
-  margin-top: 1rem; /* Space above buttons */
+  margin-top: 1rem; 
 }
 
 .confirm-btn,
@@ -737,7 +737,7 @@ button[type="submit"]:hover {
 }
 
 .confirm-btn {
-  background-color: var(--color-accent-primary); /* Primary action color */
+  background-color: var(--color-accent-primary);
   color: var(--color-text-on-accent);
 }
 
@@ -747,15 +747,15 @@ button[type="submit"]:hover {
 }
 
 .cancel-btn {
-  background-color: transparent; /* Transparent background for cancel */
-  color: var(--color-text-secondary); /* Text color */
-  border: 1px solid var(--color-border-primary); /* Subtle border */
+  background-color: transparent;
+  color: var(--color-text-secondary);
+  border: 1px solid var(--color-border-primary);
 }
 
 .cancel-btn:hover {
   background-color: var(
     --color-background-page
-  ); /* Slightly change background on hover */
+  );
   box-shadow: 0 0 10px var(--color-shadow-light);
 }
 
