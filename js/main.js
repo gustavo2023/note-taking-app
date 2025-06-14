@@ -287,36 +287,58 @@ const handleNotesContainerClick = (event) => {
 
 const handleNewNoteClick = () => {
   if (!activeNotebookId) {
-    alert("Please select a notebook first.");
+    showGenericModal({
+      title: "Action Required",
+      message: "Please select or create a notebook first to add a note.",
+      confirmText: "OK",
+      cancelText: "Close",
+    });
     return;
   }
 
-  currentEditingNoteId = null; // Reset editing note ID
+  currentEditingNoteId = null;
   renderActiveNoteEditor(activeNotebookId);
 };
 
 const handleNewNotebookClick = () => {
-  const notebookName = prompt("Enter a name for the new notebook:");
+  showGenericModal({
+    title: "New Notebook",
+    message: "Enter a name for the new notebook:",
+    confirmText: "Create",
+    cancelText: "Cancel",
+    showInput: true,
+    inputValue: "",
+    inputPlaceholder: "Notebook name...",
+    onConfirm: (notebookName) => {
+      if (notebookName.trim() === "") {
+        showGenericModal({
+          title: "Error",
+          message: "Notebook name cannot be empty. Please enter a valid name.",
+          confirmText: "OK",
+          cancelText: "Close",
+        });
+        return;
+      }
 
-  if (notebookName === null) {
-    return; // User cancelled
-  }
-
-  if (notebookName.trim() === "") {
-    alert("Notebook name cannot be empty.");
-    return;
-  }
-
-  const success = addNotebook(notebookName);
-
-  if (success) {
-    const newNotebooks = getNotebooks();
-
-    activeNotebookId = newNotebooks[newNotebooks.length - 1].id; // Set the newly created notebook as active
-    updateUI();
-  } else {
-    alert(`Failed to create notebook "${notebookName}".`);
-  }
+      const success = addNotebook(notebookName);
+      if (success) {
+        const newNotebooks = getNotebooks();
+        activeNotebookId = newNotebooks[newNotebooks.length - 1].id;
+        updateUI();
+      } else {
+        showGenericModal({
+          title: "Error",
+          message: `Failed to create notebook "${notebookName.trim()}". Please try again.`,
+          confirmText: "OK",
+          cancelText: "Close",
+        });
+        console.error(`Failed to create notebook "${notebookName.trim()}".`);
+      }
+    },
+    onCancel: () => {
+      console.log("New notebook creation cancelled.");
+    },
+  });
 };
 
 const handleNoteFormSubmit = (event) => {
@@ -326,8 +348,14 @@ const handleNoteFormSubmit = (event) => {
   const content = noteContentInput.value.trim();
 
   if (!activeNotebookId) {
-    alert("Please select a notebook first. Closing the modal.");
-    noteModal.close();
+    showGenericModal({
+      // Replace alert
+      title: "Action Required",
+      message: "Please select a notebook first. Closing the modal.",
+      confirmText: "OK",
+      cancelText: "Close",
+      onConfirm: () => noteModal.close(),
+    });
     return;
   }
 
@@ -336,30 +364,35 @@ const handleNoteFormSubmit = (event) => {
 
   if (currentEditingNoteId) {
     success = editNote(activeNotebookId, currentEditingNoteId, title, content);
-
     if (success) {
-      actionMessage = `Note "${title}" updated successfully.`;
+      actionMessage = `Note "${
+        title || "Untitled Note"
+      }" updated successfully.`;
     } else {
-      actionMessage = `Failed to update note "${title}".` || "Untitled Note";
+      actionMessage = `Failed to update note "${title || "Untitled Note"}".`;
     }
   } else {
     success = addNote(activeNotebookId, title, content);
-
     if (success) {
-      actionMessage =
-        `Note "${title}" created successfully.` || "Untitled Note created.";
+      actionMessage = `Note "${
+        title || "Untitled Note"
+      }" created successfully.`;
     } else {
-      actionMessage = `Failed to create note "${title}".` || "Untitled Note";
+      actionMessage = `Failed to create note "${title || "Untitled Note"}".`;
     }
   }
 
   if (success) {
-    console.log(actionMessage);
     updateUI();
     noteModal.close();
     clearDraft(); // Clear draft after saving
   } else {
-    alert(actionMessage);
+    showGenericModal({
+      title: "Error",
+      message: actionMessage,
+      confirmText: "OK",
+      cancelText: "Close",
+    });
     console.error(actionMessage);
   }
 };
