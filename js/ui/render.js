@@ -4,9 +4,15 @@ import {
   findNoteInNotebookById,
 } from "../data/appData.js";
 import { loadDraft } from "../services/draftStorage.js";
-import { formatRelativeDate } from "../utils/dateHelpers.js";
+import {
+  formatRelativeDate,
+  getGreetingMessage,
+  getCurrentFormatDate,
+} from "../utils/dateHelpers.js";
 
 /* DOM Elements */
+const greetingMessageElement = document.querySelector(".greeting-msg");
+const currentDateElement = document.querySelector(".current-date");
 const mainContentNotebookTitle = document.querySelector(".notebook-title");
 const notesSection = document.querySelector(".notes-section");
 const notebooksList = document.getElementById("notebooks-list");
@@ -16,6 +22,20 @@ const modalTitle = noteModal.querySelector(".modal-title");
 const noteTitleInput = document.getElementById("note-title");
 const noteContentInput = document.getElementById("note-content");
 const noteSaveBtn = document.getElementById("save-note-btn");
+
+const renderMainContentHeader = () => {
+  if (greetingMessageElement) {
+    greetingMessageElement.textContent = getGreetingMessage();
+  } else {
+    console.warn("Greeting message element not found.");
+  }
+
+  if (currentDateElement) {
+    currentDateElement.textContent = getCurrentFormatDate();
+  } else {
+    console.warn("Current date element not found.");
+  }
+};
 
 const updateMainContentTitle = (notebookName) => {
   if (notebookName) {
@@ -226,6 +246,7 @@ const renderActiveNoteEditor = (notebookId, noteId = null, mode = "create") => {
 };
 
 export {
+  renderMainContentHeader,
   updateMainContentTitle,
   renderNotebooks,
   renderNotes,
