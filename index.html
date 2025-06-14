@@ -84,6 +84,7 @@
       </section>
     </main>
 
+    <!-- Note Editing/Creation Modal -->
     <dialog class="note-modal" id="note-modal">
       <button class="close-modal-btn" aria-label="Close modal">
         <i class="fa-solid fa-xmark"></i>
@@ -101,6 +102,31 @@
         <button type="submit" class="save-note-btn" id="save-note-btn">
           Save Note
         </button>
+      </form>
+    </dialog>
+
+    <!-- Generic Modal for Confirmations/Prompts -->
+    <dialog class="generic-modal" id="generic-modal">
+      <button class="close-modal-btn" aria-label="Close modal">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <form class="generic-form" id="generic-form" method="dialog">
+        <h3 class="modal-title" id="generic-modal-title"></h3>
+        <p class="modal-message" id="generic-modal-message"></p>
+        <div class="input-group generic-input-group">
+          <label for="generic-modal-input" class="sr-only">Input</label>
+          <input type="text" id="generic-modal-input" class="modal-input" />
+        </div>
+        <div class="modal-action-buttons">
+          <button
+            type="submit"
+            class="confirm-btn"
+            id="generic-confirm-btn"
+          ></button>
+          <button type="button" class="cancel-btn" id="generic-cancel-btn">
+            Cancel
+          </button>
+        </div>
       </form>
     </dialog>
   </body>
