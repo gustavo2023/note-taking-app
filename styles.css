@@ -401,15 +401,17 @@ input:checked + .toggle-text::before {
   opacity: 0;
   visibility: hidden;
   transform: translateX(5px);
-  transition: opacity 0.2s ease-out, visibility 0s linear 0.2s,
-    transform 0.2s ease-out;
+  transition: opacity 0.2s ease-out, transform 0.2s ease-out,
+    visibility 0s linear 0.2s;
 }
 
-.notebook-item:hover .notebook-action-btns {
+.notebook-item:hover .notebook-action-btns,
+.notebook-item:focus-within .notebook-action-btns {
   opacity: 1;
   visibility: visible;
   transform: translateX(0);
-  transition-delay: 0s;
+  transition: opacity 0.2s ease-out, transform 0.2s ease-out,
+    visibility 0s linear;
 }
 
 .overlay {
@@ -558,15 +560,17 @@ main {
   opacity: 0;
   visibility: hidden;
   transform: translateY(5px);
-  transition: opacity 0.2s ease-out, visibility 0s linear 0.2s,
-    transform 0.2s ease-out;
+  transition: opacity 0.2s ease-out, transform 0.2s ease-out,
+    visibility 0s linear 0.2s;
 }
 
-.note:hover .note-buttons-container {
+.note:hover .note-buttons-container,
+.note:focus-within .note-buttons-container {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
-  transition-delay: 0s;
+  transition: opacity 0.2s ease-out, transform 0.2s ease-out,
+    visibility 0s linear;
 }
 
 .delete-note-btn,
@@ -721,9 +725,9 @@ button[type="submit"]:hover {
 
 .modal-action-buttons {
   display: flex;
-  justify-content: flex-end; 
+  justify-content: flex-end;
   gap: 0.8rem;
-  margin-top: 1rem; 
+  margin-top: 1rem;
 }
 
 .confirm-btn,
@@ -753,9 +757,7 @@ button[type="submit"]:hover {
 }
 
 .cancel-btn:hover {
-  background-color: var(
-    --color-background-page
-  );
+  background-color: var(--color-background-page);
   box-shadow: 0 0 10px var(--color-shadow-light);
 }
 
