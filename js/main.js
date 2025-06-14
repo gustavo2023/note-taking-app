@@ -46,74 +46,6 @@ const noteContentInput = document.getElementById("note-content");
 
 let activeNotebookId = null;
 let currentEditingNoteId = null;
-let lastFocusedElementBeforeModal = null;
-
-// -- Utility Functions --
-const _handleOperationResult = (
-  success,
-  failureMessage,
-  failureDetails = null,
-  callbackOnSuccess = () => {}
-) => {
-  if (success) {
-    updateUI();
-    callbackOnSuccess();
-  } else {
-    showGenericModal({
-      title: "Error",
-      message: failureMessage,
-      confirmText: "OK",
-      cancelText: "Close",
-    });
-    console.error(failureMessage, failureDetails);
-  }
-};
-
-const _handleItemActions = (
-  event,
-  itemSelector,
-  idDatasetName,
-  actionHandlers
-) => {
-  const targetElement = event.target.closest(itemSelector);
-
-  if (targetElement) {
-    if (
-      event.type === "keydown" &&
-      (event.key === "Enter" || event.key === " ")
-    ) {
-      event.preventDefault();
-    }
-
-    const itemId = targetElement.dataset[idDatasetName];
-    const contextId = itemSelector === ".note" ? activeNotebookId : itemId;
-
-    let handled = false;
-
-    for (const [btnSelector, handlerFn] of Object.entries(actionHandlers)) {
-      if (btnSelector !== "default" && event.target.closest(btnSelector)) {
-        if (itemSelector === ".note") {
-          handlerFn(contextId, itemId); 
-        } else {
-          handlerFn(itemId);
-        }
-        handled = true;
-        break;
-      }
-    }
-
-    // If no specific button was clicked/focused, perform the default action
-    if (!handled && actionHandlers.default) {
-      if (itemSelector === ".note") {
-        actionHandlers.default(contextId, itemId);
-      } else {
-        actionHandlers.default(itemId);
-      }
-    }
-  }
-};
-
-// -- Main Functionality --
 
 //  -- Sidebar Toggle Functionality --
 const toggleSidebar = () => {
@@ -577,14 +509,6 @@ const initializeApp = () => {
 
   modalForm.addEventListener("submit", handleNoteFormSubmit);
   closeModalButton.addEventListener("click", handleCloseModalClick);
-
-  newNoteButton.addEventListener("click", () => {
-    lastFocusedElementBeforeModal = newNoteButton;
-  });
-
-  newNotebookButton.addEventListener("click", () => {
-    lastFocusedElementBeforeModal = newNotebookButton;
-  });
 
   noteContentInput.addEventListener("input", handleNoteInputForDraft);
   noteTitleInput.addEventListener("input", handleNoteInputForDraft);
