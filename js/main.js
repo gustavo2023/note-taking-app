@@ -129,33 +129,47 @@ const handleRenameNotebook = (notebookId) => {
   const notebookToRename = findNotebookById(notebookId);
 
   if (!notebookToRename) {
-    return false;
+    return;
   }
 
   const currentName = notebookToRename.name;
-  const newName = prompt(
-    `Enter a new name for the notebook "${currentName}":`,
-    currentName
-  );
 
-  if (newName === null) {
-    return false;
-  }
+  showGenericModal({
+    title: "Rename Notebook",
+    message: `Enter a new name for the notebook "${currentName}":`,
+    confirmText: "Rename",
+    cancelText: "Cancel",
+    showInput: true,
+    inputValue: currentName,
+    inputPlaceholder: "New notebook name...",
+    onConfirm: (newName) => {
+      if (newName.trim() === "") {
+        showGenericModal({
+          title: "Error",
+          message: "Notebook name cannot be empty. Please enter a valid name.",
+          confirmText: "OK",
+          cancelText: "Close",
+        });
+        return;
+      }
 
-  if (newName.trim() === "") {
-    alert("Notebook name cannot be empty.");
-    return false;
-  }
-
-  const success = renameNotebook(notebookId, newName);
-
-  if (success) {
-    updateUI();
-    return true;
-  } else {
-    alert("Failed to rename notebook");
-    return false;
-  }
+      const success = renameNotebook(notebookId, newName);
+      if (success) {
+        updateUI();
+      } else {
+        showGenericModal({
+          title: "Error",
+          message: `Failed to rename notebook "${currentName}". Please try again.`,
+          confirmText: "OK",
+          cancelText: "Close",
+        });
+        console.error(`Failed to rename notebook "${currentName}".`);
+      }
+    },
+    onCancel: () => {
+      console.log(`Rename of notebook "${currentName}" cancelled.`);
+    },
+  });
 };
 
 const handleSelectedNotebook = (notebookId) => {
@@ -212,15 +226,29 @@ const handleDeleteNote = (notebookId, noteId) => {
 
   const noteTitle = noteToDelete.title || "Untitled Note";
 
-  if (confirm(`Are you sure you want to delete the note "${noteTitle}"?`)) {
-    const success = deleteNote(notebookId, noteId);
-
-    if (success) {
-      updateUI();
-    } else {
-      alert(`Failed to delete note "${noteTitle}".`);
-    }
-  }
+  showGenericModal({
+    title: "Confirm Deletion",
+    message: `Are you sure you want to delete note "${noteTitle}"? This action cannot be undone.`,
+    confirmText: "Delete",
+    cancelText: "Cancel",
+    onConfirm: () => {
+      const success = deleteNote(notebookId, noteId);
+      if (success) {
+        updateUI();
+      } else {
+        showGenericModal({
+          title: "Error",
+          message: `Failed to delete note "${noteTitle}". Please try again.`,
+          confirmText: "OK",
+          cancelText: "Close",
+        });
+        console.error(`Failed to delete note "${noteTitle}".`);
+      }
+    },
+    onCancel: () => {
+      console.log(`Deletion of note "${noteTitle}" cancelled.`);
+    },
+  });
 };
 
 const handleViewNote = (notebookId, noteId) => {
