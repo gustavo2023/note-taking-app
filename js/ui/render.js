@@ -13,7 +13,9 @@ import {
 // DOM Elements
 const greetingMessageElement = document.querySelector(".greeting-msg");
 const currentDateElement = document.querySelector(".current-date");
-const mainContentNotebookTitle = document.querySelector(".notebook-title");
+const mainContentNotebookTitle = document.querySelector(
+  ".notes-section .notebook-title"
+);
 const notesSection = document.querySelector(".notes-section");
 const notebooksList = document.getElementById("notebooks-list");
 const notesContainer = document.querySelector(".notes-container");
@@ -147,6 +149,18 @@ const showGenericModal = ({
   genericModal.showModal();
 };
 
+const _createActionButton = (className, ariaLabel, iconClasses) => {
+  const button = document.createElement("button");
+  button.classList.add(className);
+  button.setAttribute("aria-label", ariaLabel);
+
+  const icon = document.createElement("i");
+  icon.classList.add(...iconClasses);
+  button.appendChild(icon);
+
+  return button;
+};
+
 const renderMainContentHeader = () => {
   if (greetingMessageElement) {
     greetingMessageElement.textContent = getGreetingMessage();
@@ -162,7 +176,7 @@ const renderMainContentHeader = () => {
 };
 
 const updateMainContentTitle = (notebookName) => {
-  if (notebookName) {
+  if (mainContentNotebookTitle) {
     mainContentNotebookTitle.textContent = notebookName;
   } else {
     mainContentNotebookTitle.textContent = "Select a Notebook";
@@ -207,29 +221,17 @@ const renderNotebooks = (activeNotebookId) => {
     const actionsDiv = document.createElement("div");
     actionsDiv.classList.add("notebook-action-btns");
 
-    const deleteNotebookBtn = document.createElement("button");
-    deleteNotebookBtn.classList.add("delete-notebook-btn");
-    deleteNotebookBtn.setAttribute(
-      "aria-label",
-      `Delete notebook ${notebook.name}`
+    const deleteNotebookBtn = _createActionButton(
+      "delete-notebook-btn",
+      `Delete notebook ${notebook.name}`,
+      ["fa-solid", "fa-trash-can"]
     );
 
-    // Create delete icon
-    const deleteIcon = document.createElement("i");
-    deleteIcon.classList.add("fa-solid", "fa-trash-can");
-    deleteNotebookBtn.appendChild(deleteIcon);
-
-    const editNotebookBtn = document.createElement("button");
-    editNotebookBtn.classList.add("edit-notebook-btn");
-    editNotebookBtn.setAttribute(
-      "aria-label",
-      `Rename notebook ${notebook.name}`
+    const editNotebookBtn = _createActionButton(
+      "edit-notebook-btn",
+      `Rename notebook ${notebook.name}`,
+      ["fa-solid", "fa-pen-to-square"]
     );
-
-    // Create edit icon
-    const editIcon = document.createElement("i");
-    editIcon.classList.add("fa-solid", "fa-pen-to-square");
-    editNotebookBtn.appendChild(editIcon);
 
     // Append elements
     actionsDiv.appendChild(deleteNotebookBtn);
@@ -297,29 +299,17 @@ const renderNotes = (notebookId) => {
     const noteActions = document.createElement("div");
     noteActions.classList.add("note-buttons-container");
 
-    const deleteNoteBtn = document.createElement("button");
-    deleteNoteBtn.classList.add("delete-note-btn");
-    deleteNoteBtn.setAttribute(
-      "aria-label",
-      `Delete note ${note.title || "Untitled Note"}`
+    const deleteNoteBtn = _createActionButton(
+      "delete-note-btn",
+      `Delete note ${note.title || "Untitled Note"}`,
+      ["fa-solid", "fa-trash-can"]
     );
 
-    // Create delete icon
-    const deleteIcon = document.createElement("i");
-    deleteIcon.classList.add("fa-solid", "fa-trash-can");
-    deleteNoteBtn.appendChild(deleteIcon);
-
-    const editNoteBtn = document.createElement("button");
-    editNoteBtn.classList.add("edit-note-btn");
-    editNoteBtn.setAttribute(
-      "aria-label",
-      `Edit note ${note.title || "Untitled Note"}`
+    const editNoteBtn = _createActionButton(
+      "edit-note-btn",
+      `Edit note ${note.title || "Untitled Note"}`,
+      ["fa-solid", "fa-pen-to-square"]
     );
-
-    // Create edit icon
-    const editIcon = document.createElement("i");
-    editIcon.classList.add("fa-solid", "fa-pen-to-square");
-    editNoteBtn.appendChild(editIcon);
 
     noteActions.appendChild(deleteNoteBtn);
     noteActions.appendChild(editNoteBtn);
@@ -335,49 +325,54 @@ const renderNotes = (notebookId) => {
 };
 
 const renderActiveNoteEditor = (notebookId, noteId = null, mode = "create") => {
+  let displayTitle = "";
+  let displayContent = "";
+
   if (mode === "edit" && noteId) {
     modalTitle.textContent = "Edit Note";
   } else if (mode === "view" && noteId) {
     modalTitle.textContent = "View Note";
   } else {
+    // mode === "create"
     modalTitle.textContent = "Create Note";
   }
 
   if (noteId) {
+    // For EDIT or VIEW modes
     const noteToDisplay = findNoteInNotebookById(notebookId, noteId);
 
     if (noteToDisplay) {
-      noteTitleInput.value = noteToDisplay.title || "";
-      noteContentInput.value = noteToDisplay.content || "";
+      displayTitle = noteToDisplay.title || "";
+      displayContent = noteToDisplay.content || "";
 
       if (mode === "view") {
         modalTitle.textContent = noteToDisplay.title || "View Note";
       }
     } else {
       console.warn(
-        `Note with ID ${noteId} not found in notebook with ID ${notebookId}.`
+        `Note with ID ${noteId} not found in notebook with ID ${notebookId}. Closing modal.`
       );
-      noteTitleInput.value = "";
-      noteContentInput.value = "";
       noteModal.close();
       return;
     }
   } else {
-    noteTitleInput.value = "";
-    noteContentInput.value = "";
-
+    // For CREATE mode
     const draftContent = loadDraft();
 
     if (draftContent) {
-      noteContentInput.value = draftContent;
+      displayContent = draftContent;
     }
   }
+
+  noteTitleInput.value = displayTitle;
+  noteContentInput.value = displayContent;
 
   if (mode === "view") {
     noteTitleInput.readOnly = true;
     noteContentInput.readOnly = true;
     noteSaveBtn.style.display = "none";
   } else {
+    // mode === "create" or "edit"
     noteTitleInput.readOnly = false;
     noteContentInput.readOnly = false;
     noteSaveBtn.style.display = "flex";
