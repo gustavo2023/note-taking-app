@@ -10,7 +10,7 @@ import {
   getCurrentFormatDate,
 } from "../utils/dateHelpers.js";
 
-/* DOM Elements */
+// DOM Elements
 const greetingMessageElement = document.querySelector(".greeting-msg");
 const currentDateElement = document.querySelector(".current-date");
 const mainContentNotebookTitle = document.querySelector(".notebook-title");
@@ -22,6 +22,139 @@ const modalTitle = noteModal.querySelector(".modal-title");
 const noteTitleInput = document.getElementById("note-title");
 const noteContentInput = document.getElementById("note-content");
 const noteSaveBtn = document.getElementById("save-note-btn");
+
+// Generic Modal DOM Elements
+const genericModal = document.getElementById("generic-modal");
+const genericModalTitle = genericModal.querySelector("#generic-modal-title");
+const genericModalMessage = genericModal.querySelector(
+  "#generic-modal-message"
+);
+const genericModalInputGroup = genericModal.querySelector(
+  ".generic-input-group"
+);
+const genericModalInput = genericModal.querySelector("#generic-modal-input");
+const genericConfirmBtn = genericModal.querySelector("#generic-confirm-btn");
+const genericCancelBtn = genericModal.querySelector("#generic-cancel-btn");
+const genericModalCloseBtn = genericModal.querySelector(".close-modal-btn");
+
+let currentConfirmCallback = null;
+let currentCancelCallback = null;
+let currentGenericModalCloseCallback = null;
+
+const cleanupGenericModalListeners = () => {
+  if (currentConfirmCallback) {
+    genericConfirmBtn.removeEventListener("click", currentConfirmCallback);
+    currentConfirmCallback = null;
+  }
+  if (currentCancelCallback) {
+    genericCancelBtn.removeEventListener("click", currentCancelCallback);
+    currentCancelCallback = null;
+  }
+  if (currentGenericModalCloseCallback) {
+    genericModalCloseBtn.removeEventListener(
+      "click",
+      currentGenericModalCloseCallback
+    );
+    currentGenericModalCloseCallback = null;
+  }
+};
+
+const _setGenericModalContent = (
+  title,
+  message,
+  confirmText,
+  cancelText
+) => {
+  genericModalTitle.textContent = title;
+  genericModalMessage.textContent = message;
+  genericConfirmBtn.textContent = confirmText;
+  genericCancelBtn.textContent = cancelText;
+};
+
+const _configureGenericModalInput = (
+  showInput,
+  inputValue,
+  inputPlaceholder,
+  inputType
+) => {
+  if (showInput) {
+    genericModalInputGroup.style.display = "flex";
+    genericModalInput.value = inputValue;
+    genericModalInput.placeholder = inputPlaceholder;
+    genericModalInput.type = inputType;
+    genericModalInput.focus();
+  } else {
+    genericModalInputGroup.style.display = "none";
+    genericModalInput.value = "";
+  }
+};
+
+const _attachGenericModalEventListeners = (
+  onConfirm,
+  onCancel,
+  showInput
+) => {
+  const handleConfirm = (event) => {
+    event.preventDefault();
+    onConfirm(showInput ? genericModalInput.value.trim() : undefined);
+    genericModal.close();
+  };
+
+  const handleCancel = () => {
+    onCancel();
+    genericModal.close();
+  };
+
+  const handleModalCloseByX = (event) => {
+    event.preventDefault();
+    onCancel();
+    genericModal.close();
+  };
+
+  currentConfirmCallback = handleConfirm;
+  currentCancelCallback = handleCancel;
+  currentGenericModalCloseCallback = handleModalCloseByX;
+
+  genericConfirmBtn.addEventListener("click", currentConfirmCallback);
+  genericCancelBtn.addEventListener("click", currentCancelCallback);
+  genericModalCloseBtn.addEventListener(
+    "click",
+    currentGenericModalCloseCallback
+  );
+
+  genericModal.onclose = () => {
+    genericModal.onclose = null;
+    cleanupGenericModalListeners();
+  };
+};
+
+const showGenericModal = ({
+  title,
+  message,
+  confirmText = "Confirm",
+  cancelText = "Cancel",
+  onConfirm = () => {},
+  onCancel = () => {},
+  showInput = false,
+  inputValue = "",
+  inputPlaceholder = "",
+  inputType = "text",
+}) => {
+  cleanupGenericModalListeners();
+
+  _setGenericModalContent(title, message, confirmText, cancelText);
+
+  _configureGenericModalInput(
+    showInput,
+    inputValue,
+    inputPlaceholder,
+    inputType
+  );
+
+  _attachGenericModalEventListeners(onConfirm, onCancel, showInput);
+
+  genericModal.showModal();
+};
 
 const renderMainContentHeader = () => {
   if (greetingMessageElement) {
@@ -251,4 +384,5 @@ export {
   renderNotebooks,
   renderNotes,
   renderActiveNoteEditor,
+  showGenericModal,
 };
