@@ -3,7 +3,7 @@ import {
   findNotebookById,
   findNoteInNotebookById,
 } from "../data/appData.js";
-import { saveDraft, loadDraft, clearDraft } from "../services/draftStorage.js";
+import { loadDraft } from "../services/draftStorage.js";
 
 /* DOM Elements */
 const mainContentNotebookTitle = document.querySelector(".notebook-title");

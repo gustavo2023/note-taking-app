@@ -102,7 +102,6 @@ textarea:not([rows]) {
   /* Accent Colors (for buttons, active states, icons) */
   --color-accent-primary: #007bff; /* A vibrant blue for primary actions/buttons */
   --color-accent-primary-hover: #0056b3;
-  --color-accent-secondary: #28a745; /* A green for "new" or positive actions */
   --color-accent-delete: #dc3545; /* A red for delete actions */
   --color-accent-edit: #ffc107; /* An orange/yellow for edit actions */
   --color-accent-icon: #6e6e6e; /* Default icon color */
@@ -150,7 +149,6 @@ textarea:not([rows]) {
   /* Accent Colors (for buttons, active states, icons) */
   --color-accent-primary: #63b3ed;
   --color-accent-primary-hover: #3f8bb8;
-  --color-accent-secondary: #48bb78;
   --color-accent-delete: #ef5350;
   --color-accent-edit: #ffd700;
   --color-accent-icon: #bbbbbb;

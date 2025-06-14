@@ -18,7 +18,7 @@ import {
   renderNotes,
   renderActiveNoteEditor,
 } from "./ui/render.js";
-import { saveDraft, loadDraft, clearDraft } from "./services/draftStorage.js";
+import { saveDraft, clearDraft } from "./services/draftStorage.js";
 
 // -- DOM Elements --
 
@@ -39,10 +39,8 @@ const notesContainer = document.querySelector(".notes-container");
 const noteModal = document.getElementById("note-modal");
 const closeModalButton = noteModal.querySelector(".close-modal-btn");
 const modalForm = document.getElementById("note-form");
-const modalTitle = noteModal.querySelector(".modal-title");
 const noteTitleInput = document.getElementById("note-title");
 const noteContentInput = document.getElementById("note-content");
-const noteSaveBtn = document.getElementById("save-note-btn");
 
 let activeNotebookId = null;
 let currentEditingNoteId = null;
