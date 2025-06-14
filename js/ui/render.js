@@ -177,9 +177,11 @@ const renderMainContentHeader = () => {
 
 const updateMainContentTitle = (notebookName) => {
   if (mainContentNotebookTitle) {
-    mainContentNotebookTitle.textContent = notebookName;
+    mainContentNotebookTitle.textContent = notebookName || "Select a Notebook";
   } else {
-    mainContentNotebookTitle.textContent = "Select a Notebook";
+    console.warn(
+      "Main content notebook title element (.notes-section .notebook-title) not found in DOM."
+    );
   }
 };
 
