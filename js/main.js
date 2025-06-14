@@ -98,7 +98,6 @@ const handleDeleteNotebook = (notebookId) => {
     const success = deleteNotebook(notebookId);
 
     if (success) {
-      alert(`Notebook "${notebookName}" deleted successfully.`);
       if (activeNotebookId === notebookId) {
         const remainingNotebooks = getNotebooks();
         activeNotebookId =
@@ -141,7 +140,6 @@ const handleRenameNotebook = (notebookId) => {
   const success = renameNotebook(notebookId, newName);
 
   if (success) {
-    alert(`Notebook renamed to ${newName.trim()} successfully.`);
     updateUI();
     return true;
   } else {
@@ -208,7 +206,6 @@ const handleDeleteNote = (notebookId, noteId) => {
     const success = deleteNote(notebookId, noteId);
 
     if (success) {
-      alert(`Note "${noteTitle}" deleted successfully.`);
       updateUI();
     } else {
       alert(`Failed to delete note "${noteTitle}".`);
@@ -279,7 +276,6 @@ const handleNewNotebookClick = () => {
 
     activeNotebookId = newNotebooks[newNotebooks.length - 1].id; // Set the newly created notebook as active
     updateUI();
-    alert(`Notebook "${notebookName}" created successfully.`);
   } else {
     alert(`Failed to create notebook "${notebookName}".`);
   }
@@ -310,6 +306,7 @@ const handleNoteFormSubmit = (event) => {
     }
   } else {
     success = addNote(activeNotebookId, title, content);
+
     if (success) {
       actionMessage =
         `Note "${title}" created successfully.` || "Untitled Note created.";
@@ -319,12 +316,13 @@ const handleNoteFormSubmit = (event) => {
   }
 
   if (success) {
-    alert(actionMessage);
+    console.log(actionMessage);
     updateUI();
     noteModal.close();
     clearDraft(); // Clear draft after saving
   } else {
     alert(actionMessage);
+    console.error(actionMessage);
   }
 };
 
