@@ -13,6 +13,7 @@ import {
   findNoteInNotebookById,
 } from "./data/appData.js";
 import {
+  showGenericModal,
   renderMainContentHeader,
   updateMainContentTitle,
   renderNotebooks,
@@ -88,32 +89,40 @@ const handleDeleteNotebook = (notebookId) => {
   const notebookToDelete = findNotebookById(notebookId);
 
   if (!notebookToDelete) {
-    return false;
+    return; // findNotebookById already warns
   }
 
   const notebookName = notebookToDelete.name;
 
-  if (
-    confirm(`Are you sure you want to delete the notebook "${notebookName}"?`)
-  ) {
-    const success = deleteNotebook(notebookId);
+  showGenericModal({
+    title: "Confirm Deletion",
+    message: `Are you sure you want to delete the notebook "${notebookName}" and all its notes? This action cannot be undone.`,
+    confirmText: "Delete",
+    cancelText: "Cancel",
+    onConfirm: () => {
+      const success = deleteNotebook(notebookId);
 
-    if (success) {
-      if (activeNotebookId === notebookId) {
-        const remainingNotebooks = getNotebooks();
-        activeNotebookId =
-          remainingNotebooks.length > 0 ? remainingNotebooks[0].id : null;
+      if (success) {
+        if (activeNotebookId === notebookId) {
+          const remainingNotebooks = getNotebooks();
+          activeNotebookId =
+            remainingNotebooks.length > 0 ? remainingNotebooks[0].id : null;
+        }
+        updateUI();
+      } else {
+        showGenericModal({
+          title: "Error",
+          message: `Failed to delete notebook "${notebookName}". Please try again.`,
+          confirmText: "OK",
+          cancelText: "Close",
+        });
+        console.error(`Failed to delete notebook "${notebookName}".`);
       }
-
-      updateUI();
-      return true;
-    } else {
-      alert(`Failed to delete notebook "${notebookName}".`);
-      return false;
-    }
-  }
-
-  return false;
+    },
+    onCancel: () => {
+      console.log(`Deletion of notebook "${notebookName}" cancelled.`);
+    },
+  });
 };
 
 const handleRenameNotebook = (notebookId) => {

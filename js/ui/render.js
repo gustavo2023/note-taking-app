@@ -59,12 +59,7 @@ const cleanupGenericModalListeners = () => {
   }
 };
 
-const _setGenericModalContent = (
-  title,
-  message,
-  confirmText,
-  cancelText
-) => {
+const _setGenericModalContent = (title, message, confirmText, cancelText) => {
   genericModalTitle.textContent = title;
   genericModalMessage.textContent = message;
   genericConfirmBtn.textContent = confirmText;
@@ -89,11 +84,7 @@ const _configureGenericModalInput = (
   }
 };
 
-const _attachGenericModalEventListeners = (
-  onConfirm,
-  onCancel,
-  showInput
-) => {
+const _attachGenericModalEventListeners = (onConfirm, onCancel, showInput) => {
   const handleConfirm = (event) => {
     event.preventDefault();
     onConfirm(showInput ? genericModalInput.value.trim() : undefined);
@@ -379,10 +370,10 @@ const renderActiveNoteEditor = (notebookId, noteId = null, mode = "create") => {
 };
 
 export {
+  showGenericModal,
   renderMainContentHeader,
   updateMainContentTitle,
   renderNotebooks,
   renderNotes,
   renderActiveNoteEditor,
-  showGenericModal,
 };
