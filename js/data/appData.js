@@ -1,15 +1,7 @@
 import { loadData, saveData } from "../services/storage.js";
+import { validateNonEmptyString } from "../utils/validation.js";
 
 let notebooks = [];
-
-// Helper Functions
-const validateNonEmptyString = (value, fieldName) => {
-  if (!value || typeof value !== "string" || value.trim() === "") {
-    console.error(`Invalid ${fieldName}. It must be a non-empty string.`);
-    return false;
-  }
-  return true;
-};
 
 const findNotebookById = (notebookId) => {
   if (!validateNonEmptyString(notebookId, "notebook ID")) {
@@ -117,22 +109,20 @@ const renameNotebook = (notebookId, newName) => {
 };
 
 const addNote = (notebookId, title, content) => {
-  if (!title || typeof title !== "string") {
-    console.error("Invalid note title.");
+  if (!validateNonEmptyString(title, "note title")) {
     return false;
   }
 
-  if (!content || typeof content !== "string") {
-    console.error("Invalid note content.");
+  if (!validateNonEmptyString(content, "note content")) {
     return false;
   }
 
-  let notebook = findNotebookById(notebookId);
+  const notebook = findNotebookById(notebookId);
   if (!notebook) {
     return false;
   }
 
-  let newNote = createNote(title, content);
+  const newNote = createNote(title, content);
   notebook.notes.push(newNote);
   saveData(notebooks);
   return true;
