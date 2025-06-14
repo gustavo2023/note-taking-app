@@ -78,8 +78,13 @@ const updateUI = () => {
   renderNotebooks(activeNotebookId);
   renderNotes(activeNotebookId);
 
-  const activeNotebook = findNotebookById(activeNotebookId);
-  const notebookName = activeNotebook ? activeNotebook.name : null;
+  let notebookName = null;
+  if (activeNotebookId) {
+    const activeNotebook = findNotebookById(activeNotebookId);
+    if (activeNotebook) {
+        notebookName = activeNotebook.name;
+    }
+  }
 
   renderMainContentHeader();
   updateMainContentTitle(notebookName);
