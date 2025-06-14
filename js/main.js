@@ -13,6 +13,7 @@ import {
   findNoteInNotebookById,
 } from "./data/appData.js";
 import {
+  renderMainContentHeader,
   updateMainContentTitle,
   renderNotebooks,
   renderNotes,
@@ -78,6 +79,8 @@ const updateUI = () => {
 
   const activeNotebook = findNotebookById(activeNotebookId);
   const notebookName = activeNotebook ? activeNotebook.name : null;
+
+  renderMainContentHeader();
   updateMainContentTitle(notebookName);
 };
 
