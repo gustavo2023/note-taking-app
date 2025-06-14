@@ -89,7 +89,7 @@ const handleDeleteNotebook = (notebookId) => {
   const notebookToDelete = findNotebookById(notebookId);
 
   if (!notebookToDelete) {
-    return; // findNotebookById already warns
+    return;
   }
 
   const notebookName = notebookToDelete.name;
@@ -116,6 +116,7 @@ const handleDeleteNotebook = (notebookId) => {
           confirmText: "OK",
           cancelText: "Close",
         });
+
         console.error(`Failed to delete notebook "${notebookName}".`);
       }
     },
@@ -150,6 +151,7 @@ const handleRenameNotebook = (notebookId) => {
           confirmText: "OK",
           cancelText: "Close",
         });
+
         return;
       }
 
@@ -163,6 +165,7 @@ const handleRenameNotebook = (notebookId) => {
           confirmText: "OK",
           cancelText: "Close",
         });
+
         console.error(`Failed to rename notebook "${currentName}".`);
       }
     },
@@ -242,6 +245,7 @@ const handleDeleteNote = (notebookId, noteId) => {
           confirmText: "OK",
           cancelText: "Close",
         });
+
         console.error(`Failed to delete note "${noteTitle}".`);
       }
     },
@@ -293,6 +297,7 @@ const handleNewNoteClick = () => {
       confirmText: "OK",
       cancelText: "Close",
     });
+
     return;
   }
 
@@ -317,10 +322,12 @@ const handleNewNotebookClick = () => {
           confirmText: "OK",
           cancelText: "Close",
         });
+
         return;
       }
 
       const success = addNotebook(notebookName);
+
       if (success) {
         const newNotebooks = getNotebooks();
         activeNotebookId = newNotebooks[newNotebooks.length - 1].id;
@@ -349,7 +356,6 @@ const handleNoteFormSubmit = (event) => {
 
   if (!activeNotebookId) {
     showGenericModal({
-      // Replace alert
       title: "Action Required",
       message: "Please select a notebook first. Closing the modal.",
       confirmText: "OK",

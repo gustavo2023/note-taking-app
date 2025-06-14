@@ -186,9 +186,18 @@ const renderNotebooks = (activeNotebookId) => {
     const notebookItem = document.createElement("li");
     notebookItem.classList.add("notebook-item");
     notebookItem.dataset.notebookId = notebook.id;
+    notebookItem.setAttribute("tabindex", "0");
+    notebookItem.setAttribute("role", "button");
+    notebookItem.setAttribute(
+      "aria-label",
+      `Notebook: ${notebook.name}. Click to view notes.`
+    );
 
     if (notebook.id === activeNotebookId) {
       notebookItem.classList.add("active");
+      notebookItem.setAttribute("aria-current", "true"); // Indicate that this is the active notebook
+    } else {
+      notebookItem.removeAttribute("aria-current");
     }
 
     const notebookNameSpan = document.createElement("span");
@@ -261,6 +270,14 @@ const renderNotes = (notebookId) => {
     const noteItem = document.createElement("article");
     noteItem.classList.add("note");
     noteItem.dataset.noteId = note.id;
+    noteItem.setAttribute("tabindex", "0");
+    noteItem.setAttribute("role", "button");
+    noteItem.setAttribute(
+      "aria-label",
+      `Note: ${note.title || "Untitled Note"}. Created: ${formatRelativeDate(
+        note.createdAt
+      )}. Click to view or edit.`
+    );
 
     const noteTitle = document.createElement("h4");
     noteTitle.classList.add("note-title");
