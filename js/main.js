@@ -207,6 +207,27 @@ const handleNotebookListClick = (event) => {
   }
 };
 
+const handleNotebookListKeydown = (event) => {
+  if (event.key === "Enter" || event.key === " ") {
+    const focusedElement = event.target.closest(".notebook-item");
+
+    if (focusedElement) {
+      event.preventDefault();
+
+      const notebookId = focusedElement.dataset.notebookId;
+
+      // Check if focus is on a nested button or the main item
+      if (event.target.closest(".delete-notebook-btn")) {
+        handleDeleteNotebook(notebookId);
+      } else if (event.target.closest(".edit-notebook-btn")) {
+        handleRenameNotebook(notebookId);
+      } else {
+        handleSelectedNotebook(notebookId);
+      }
+    }
+  }
+};
+
 const handleEditNote = (notebookId, noteId) => {
   const noteToEdit = findNoteInNotebookById(notebookId, noteId);
 
@@ -285,6 +306,33 @@ const handleNotesContainerClick = (event) => {
       handleDeleteNote(notebookId, noteId);
     } else {
       handleViewNote(notebookId, noteId);
+    }
+  }
+};
+
+const handleNotesContainerKeydown = (event) => {
+  if (event.key === "Enter" || event.key === " ") {
+    const focusedElement = event.target.closest(".note");
+
+    if (focusedElement) {
+      event.preventDefault();
+
+      const noteId = focusedElement.dataset.noteId;
+      const notebookId = activeNotebookId;
+
+      if (!notebookId) {
+        console.warn("No active notebook selected.");
+        return;
+      }
+
+      // Check if focus is on a nested button or the main item
+      if (event.target.closest(".edit-note-btn")) {
+        handleEditNote(notebookId, noteId);
+      } else if (event.target.closest(".delete-note-btn")) {
+        handleDeleteNote(notebookId, noteId);
+      } else {
+        handleViewNote(notebookId, noteId);
+      }
     }
   }
 };
@@ -405,6 +453,11 @@ const handleNoteFormSubmit = (event) => {
 
 const handleCloseModalClick = () => {
   noteModal.close();
+
+  if (lastFocusedElementBeforeModal) {
+    lastFocusedElementBeforeModal.focus();
+    lastFocusedElementBeforeModal = null;
+  }
 };
 
 const handleNoteInputForDraft = () => {
@@ -448,12 +501,22 @@ const initializeApp = () => {
   closeSidebarButton.addEventListener("click", toggleSidebar);
 
   notebooksList.addEventListener("click", handleNotebookListClick);
+  notebooksList.addEventListener("keydown", handleNotebookListKeydown);
   notesContainer.addEventListener("click", handleNotesContainerClick);
+  notesContainer.addEventListener("keydown", handleNotesContainerKeydown);
   newNoteButton.addEventListener("click", handleNewNoteClick);
   newNotebookButton.addEventListener("click", handleNewNotebookClick);
 
   modalForm.addEventListener("submit", handleNoteFormSubmit);
   closeModalButton.addEventListener("click", handleCloseModalClick);
+
+  newNoteButton.addEventListener("click", () => {
+    lastFocusedElementBeforeModal = newNoteButton;
+  });
+
+  newNotebookButton.addEventListener("click", () => {
+    lastFocusedElementBeforeModal = newNotebookButton;
+  });
 
   noteContentInput.addEventListener("input", handleNoteInputForDraft);
   noteTitleInput.addEventListener("input", handleNoteInputForDraft);
