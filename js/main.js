@@ -120,7 +120,7 @@ const handleDeleteNotebook = (notebookId) => {
       }
     },
     onCancel: () => {
-      console.log(`Deletion of notebook "${notebookName}" cancelled.`);
+      return; // No action needed on cancel
     },
   });
 };
@@ -167,7 +167,7 @@ const handleRenameNotebook = (notebookId) => {
       }
     },
     onCancel: () => {
-      console.log(`Rename of notebook "${currentName}" cancelled.`);
+      return;
     },
   });
 };
@@ -246,7 +246,7 @@ const handleDeleteNote = (notebookId, noteId) => {
       }
     },
     onCancel: () => {
-      console.log(`Deletion of note "${noteTitle}" cancelled.`);
+      return;
     },
   });
 };
@@ -336,7 +336,7 @@ const handleNewNotebookClick = () => {
       }
     },
     onCancel: () => {
-      console.log("New notebook creation cancelled.");
+      return;
     },
   });
 };
