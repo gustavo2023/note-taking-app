@@ -46,6 +46,7 @@ const noteContentInput = document.getElementById("note-content");
 
 let activeNotebookId = null;
 let currentEditingNoteId = null;
+let lastFocusedElementBeforeModal = null;
 
 //  -- Sidebar Toggle Functionality --
 const toggleSidebar = () => {
